@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    NINA - Perfil Usuário
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../assets/demo/demo.css" rel="stylesheet" />
+</head>
+
+<body class="">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="white" data-active-color="danger">
+      <div class="logo">
+        <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+          <div class="logo-image-small">
+            <img src="../assets/img/logo-small.png">
+          </div>
+          <!-- <p>CT</p> -->
+        </a>
+        <a href="https://www.creative-tim.com" class="simple-text logo-normal">
+          <div id="listaNomeUser"></div>
+          <!-- <div class="logo-image-big">
+            <img src="../assets/img/logo-big.png">
+          </div> -->
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav" id="listarMenu">
+         
+          <!--li class="active-pro">
+            <a href="./upgrade.html">
+              <i class="nc-icon nc-spaceship"></i>
+              <p>Upgrade to PRO</p>
+            </a>
+          </li-->
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="javascript:;">Administação de clientes</a>
+            <button class="btn btn-primary btn-round" onclick="verListagemClientes()" id="BtnListagem" style="display: none;">Listagem</button>
+            
+            
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+         
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card card-user">
+              <div class="image">
+                <img src="../assets/img/damir-bosnjak.jpg" alt="...">
+              </div>
+              <div class="card-body">
+                <div class="author">
+                  <a href="#">
+                    <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
+                    <h5 class="title"><div id="nomeUserDesc"></div></h5>
+                  </a>
+                  <!--p class="description">
+                    @chetfaker
+                  </p-->
+                </div>
+                
+              </div>
+              <div class="card-footer">
+                <hr>
+                <div class="button-container">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-6 col-6 ml-auto">
+                      <h5>Cargo<br><small><div id="cargoUserDesc"></div></small></h5>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
+                      <h5>Tipo<br><small><div id="tipoUserDesc"></div></small></h5>
+                    </div>
+                    <div class="col-lg-3 mr-auto">
+                      <h5>Status<br><small><div id="statusUserDesc"></div></small></h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+          <div class="col-md-8">
+            <div class="card card-user">
+              <div class="card-header">
+                <h5 class="card-title">Edit Profile</h5>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="row">
+                    <div class="col-md-5 pr-1">
+                      <div class="form-group">
+                        <label>Responsavel (idUser)</label>
+                        <div id="idUserEdit"></div>
+                        <!--input type="hidden" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc."-->
+                      </div>
+                    </div>
+                    <div class="col-md-3 px-1">
+                      <div class="form-group">
+                        <label>Nome</label>
+                        <div id="nome"></div>
+                        <!--input type="text" class="form-control" placeholder="Username" value="michael23"-->
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-1">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <div id="email"></div>
+                        <!--input type="email" class="form-control" placeholder="Email"-->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label>Telefone</label>
+                        <div id="telefone"></div> 
+                        <!--input type="text" class="form-control" placeholder="Company" value="Chet"-->
+                      </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+                      <div class="form-group">
+                        <label>Endereço</label>
+                        <div id="endereco"></div> 
+                        <!--input type="text" class="form-control" placeholder="Last Name" value="Faker"-->
+                      </div>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                    <div class="col-md-4 pr-1">
+                      <div class="form-group">
+                        <label>Cargo</label>
+                        <div id="cargo"></div>
+                        
+                      </div>
+                    </div>
+                    <div class="col-md-4 px-1">
+                      <div class="form-group">
+                        <label>Tipo</label>
+                        <div id="tipo"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 pl-1">
+                      <div class="form-group">
+                        <label>Status</label>
+                        <div id="status"></div>
+                      </div>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                    <div class="update ml-auto mr-auto">
+                      <div id="btn_UpdateUser"></div>
+                      
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid">
+          
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../assets/demo/demo.js"></script>
+  <script src="../assets/js/validarUser.js"></script>  
+  <script>
+
+    function btn_UpdatePerfil(){
+      var query = location.search.slice(1);
+      var partes = query.split('&');
+      var datas = {};
+      partes.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        datas[chave] = valor;
+      });
+
+      var idUser        = datas.idUser
+      var idUserEdit    = datas.idUserLista
+      document.getElementById('btn_UpdateUser').innerHTML   = '<a href="http://localhost/nina/admin/edit_user.html?idUser='+idUser+'&idUserLista='+idUserEdit+'" class="btn btn-primary btn-round">Atualizar Perfil</a>'
+      
+    }
+    btn_UpdatePerfil()
+    
+    function validarLogin(){
+      $.ajax({
+      type: "GET",
+      url: "http://localhost/nina/php/verificarUser.php",
+      dataType: "json",
+      cache: false,
+      success: function(retorno) {
+        console.log("User logado!");
+        
+      },
+      error: function(xhr, status, error) {
+        console.error("Erro ao atualizar:", error);
+        console.log('Erro ao atualizar o tipo de usuário');
+        // alert(xhr.responseText); // pode ativar se quiser ver o erro completo
+      }
+    });
+  } 
+  validarLogin()
+   
+
+    function mudarTipoUser(idUserApagar, tipo) {
+    $.ajax({
+      type: "GET",
+      url: "http://localhost/nina/php/mudarTipoUser.php?idUserApagar=" + encodeURIComponent(idUserApagar) + '&tipo=' + encodeURIComponent(tipo),
+      dataType: "json",
+      cache: false,
+      success: function(retorno) {
+        console.log("Retorno do servidor:", retorno);
+        alert("Atualizado com sucesso!");
+        window.location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error("Erro ao atualizar:", error);
+        alert('Erro ao atualizar o tipo de usuário');
+        // alert(xhr.responseText); // pode ativar se quiser ver o erro completo
+      }
+    });
+  }
+
+
+    function desativarUser(idUserApagar, status){
+      $.ajax({
+        type: "GET",
+        url: "http://localhost/nina/php/apagarUser.php?idUserApagar=" + idUserApagar+'&status='+status,
+        dataType: "json",
+        cache: false,
+        success: function(retorno){
+          console.log("Retorno do servidor:", retorno);
+          alert("Usuário atualizado com sucesso!");
+          window.location.reload()
+
+        },
+        error: function(xhr, status, error) {
+          console.error("Erro ao excluir:", error);
+          alert('Erro ao atualizar usuário');
+          //alert(xhr.responseText);
+        }
+      });
+    }
+ 
+    function mostrarDadosEditUSer()
+    {
+      var query = location.search.slice(1);
+      var partes = query.split('&');
+      var datas = {};
+      partes.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        datas[chave] = valor;
+      });
+
+      var idUser        = datas.idUser
+      var idUserEdit    = datas.idUserLista
+
+      $.ajax({
+          type: "GET",
+          url: "http://localhost/nina/php/listaUser.php?idUser="+idUserEdit,
+          contentType: false,
+          cache: false,
+          dataType: "json",
+          data: datas,
+          processData:false,
+          success: function(retorno){
+              console.log(retorno);
+              for(var i = 0; i<retorno.length; i++){
+                
+                  
+                  let tipoUser          = retorno[i].tipo;
+                  let nome              = retorno[i].nome; 
+                  let telefone          = retorno[i].telefone;
+                  let email             = retorno[i].email;
+                  let endereco          = retorno[i].endereco;
+                  let cargo             = retorno[i].cargo;
+                  let status            = retorno[i].status;
+
+                  document.getElementById('idUserEdit').innerHTML   = '<input type="text" class="form-control" placeholder="Nome do cliente" name="idUserEdit" value="'+idUserEdit+'" disabled>'
+                  document.getElementById('nome').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="nome" value="'+nome+'" disabled>'
+                  document.getElementById('telefone').innerHTML     = '<input type="tel" class="form-control" name="telefone" maxlength="15" placeholder="(99) 99999-9999" value="'+telefone+'" id="telefone" disabled>'
+                  document.getElementById('email').innerHTML        = '<input type="email" class="form-control" placeholder="" name="email" value="'+email+'" disabled>'
+                  document.getElementById('endereco').innerHTML     = '<input type="text" class="form-control" placeholder="" name="endereco" value="'+endereco+'" disabled>'
+                  document.getElementById('cargo').innerHTML        = '<input type="text" class="form-control" placeholder="" name="cargo" value="'+cargo+'" disabled>'
+                  document.getElementById('cargoUserDesc').innerHTML  = cargo
+                  document.getElementById('nomeUserDesc').innerHTML         = nome
+
+                  if(tipoUser == 0){
+                    tipoUser = 'Admin'
+                    document.getElementById('tipo').innerHTML       = '<input type="text" class="form-control" placeholder="" name="tipo" value="'+tipoUser+'" disabled> '
+                    document.getElementById('tipoUserDesc').innerHTML       = tipoUser
+                    
+                  }
+                  else
+                  {
+                    tipoUser = 'Consultor'
+                    document.getElementById('tipo').innerHTML       = '<input type="text" class="form-control" placeholder="" name="status" value="'+tipoUser+'" disabled> '
+                    document.getElementById('tipoUserDesc').innerHTML       = tipoUser
+                  }
+
+                  if(status == 1){
+                    status = 'Ativo'
+                    document.getElementById('statusUserDesc').innerHTML       = status
+                    document.getElementById('status').innerHTML     = '<input type="text" class="form-control" placeholder="" name="status" value="'+status+'" disabled>'
+                   
+
+                  }
+                  else
+                  {
+                    status = 'Inativo'
+                    document.getElementById('statusUserDesc').innerHTML       = status
+                    document.getElementById('status').innerHTML     = '<input type="text" class="form-control" placeholder="" name="status" value="'+status+'" disabled>'
+                
+                  }
+                  
+                
+                  //document.getElementById('idcliente').innerHTML = '<input type="hidden" name="idCliente" value="'+idCliente+'" >' 
+              }
+            
+          },
+            error: function(xhr, status, error) {
+            alert('erro')
+            alert(xhr.responseText);
+          }
+        }); 
+
+    }
+    mostrarDadosEditUSer()
+
+        function mostrarNomeRepresentante()
+        {
+          var query = location.search.slice(1);
+          var partes = query.split('&');
+          var datas = {};
+          partes.forEach(function (parte) {
+            var chaveValor = parte.split('=');
+            var chave = chaveValor[0];
+            var valor = chaveValor[1];
+            datas[chave] = valor;
+          });
+    
+          var idUser = datas.idUser
+          var idUserLista = datas.idUserLista
+    
+          $.ajax({
+              type: "GET",
+              url: "http://localhost/nina/php/listaUser.php?idUser="+idUser,
+              contentType: false,
+              cache: false,
+              dataType: "json",
+              data: datas,
+              processData:false,
+              success: function(retorno){
+                  console.log(retorno);
+                  for(var i = 0; i<retorno.length; i++){
+
+                      var primeiro_nome = retorno[i].nome; 
+                      var telefone    = retorno[i].telefone;
+                      var email       = retorno[i].email;
+                      
+                      document.getElementById("mostraUser").innerHTML += ' <label>Responsável: </label><input type="text" class="form-control" disabled="" placeholder="Company" value="'+primeiro_nome+'"><input type="hidden" value="'+idUserLista+'" name="idUserEdit" />';
+                  }
+                
+              },
+                error: function(xhr, status, error) {
+                alert('erro')
+                alert(xhr.responseText);
+              }
+            }); 
+    
+        }
+       // mostrarNomeRepresentante()
+     
+    function motrarMenu()
+    {
+      var query = location.search.slice(1);
+      var partes = query.split('&');
+      var datas = {};
+      partes.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        datas[chave] = valor;
+      });
+  
+      var idUser = datas.idUser
+      $.ajax({
+          type: "GET",
+          url: "http://localhost/lerin/php/listaUser.php?idUser="+idUser,
+          contentType: false,
+          cache: false,
+          dataType: "json",
+          data: datas,
+          processData:false,
+          success: function(retorno){
+              for(var i = 0; i<retorno.length; i++){
+                  let tipo      = retorno[i].tipo  
+                  
+                  if(tipo == 0)
+                  {
+                    document.getElementById("listarMenu").innerHTML += '<li class="active"><a href="./criar_user.html?idUser='+idUser+'"><i class="nc-icon nc-circle-10"></i><p>Usuários</p></a></li><li><a href="./criar_geral.html?idUser='+idUser+'"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./criar_graficos.html?idUser='+idUser+'"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>'
+                  }
+                  else{
+                    document.getElementById("listarMenu").innerHTML += '<li class="active"><a href="./criar_geral.html?idUser='+idUser+'"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./criar_graficos.html?idUser='+idUser+'"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>'
+                  }
+                }
+          },
+            error: function(xhr, status, error) {
+            alert('erro')
+            alert(xhr.responseText);
+          }
+         
+        }); 
+      }
+    
+    
+    motrarMenu()
+ 
+    function dadosUser()
+    {
+      var query = location.search.slice(1);
+      var partes = query.split('&');
+      var datas = {};
+      partes.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        datas[chave] = valor;
+      });
+
+      var idUser = datas.idUser
+
+      $.ajax({
+          type: "GET",
+          url: "http://localhost/lerin/php/listaUser.php?idUser="+idUser,
+          contentType: false,
+          cache: false,
+          dataType: "json",
+          data: datas,
+          processData:false,
+          success: function(retorno){
+              for(var i = 0; i<retorno.length; i++){
+                  var primeiro_nome      = retorno[i].nome  
+                  
+                  
+                  document.getElementById("listaNomeUser").innerHTML += primeiro_nome;
+              }
+            
+          },
+            error: function(xhr, status, error) {
+            alert('erro')
+            alert(xhr.responseText);
+          }
+        }); 
+      }
+      dadosUser()
+
+    const telefoneInput = document.getElementById("telefone");
+
+    telefoneInput.addEventListener("input", function (e) {
+      let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não é número
+
+      if (value.length > 10) {
+        value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+      } else {
+        value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+      }
+
+      e.target.value = value;
+    });
+  
+    const MAX_IDLE_TIME = 15 * 60 * 1000; // 15 minutos em milissegundos
+  
+    function checkIdleTime() {
+      const lastActivity = sessionStorage.getItem('lastActivity');
+      const now = Date.now();
+  
+      if (lastActivity && (now - lastActivity > MAX_IDLE_TIME)) {
+        alert("Sessão expirada por inatividade.");
+        sessionStorage.clear();
+        window.location.href = "http://localhost/nina/admin/login.html";
+      } else {
+        sessionStorage.setItem('lastActivity', now); // Atualiza a cada verificação
+      }
+    }
+  
+    // Verifica a cada 1 minuto
+    setInterval(checkIdleTime, 60 * 1000);
+  
+    // Também atualiza a cada ação do usuário
+    ['click', 'mousemove', 'keypress', 'scroll'].forEach(evt =>
+      document.addEventListener(evt, () =>
+        sessionStorage.setItem('lastActivity', Date.now())
+      )
+    );
+
+ 
+</script>
+
+</body>
+
+</html>
