@@ -38,7 +38,7 @@ $.ajax({
             var obs                 = retorno[i].obs;
 
             
-            document.getElementById("listaGeral").innerHTML += '<tr class="linhas"><td>'+funcionario+'</td><td>'+vinculo+'</td><td>'+cargo+'</td><td>'+equipamento+'</td><td>'+matricula+'</td><td>'+data_admisso+'</td><td class="text-right"><a href="user.html?idUser='+idUser+'&idUserLista='+idUserLista+'">Ver</a>&nbsp;|&nbsp;<a href="edit_user.html?idUser='+idUser+'&idUserLista='+idUserLista+'">editar</a></td></tr>';
+            document.getElementById("listaGeral").innerHTML += '<tr class="linhas"><td>'+funcionario+'</td><td>'+vinculo+'</td><td>'+cargo+'</td><td>'+equipamento+'</td><td>'+matricula+'</td><td>'+data_admisso+'</td><td class="text-right"><a href="verGeral.html?idUser='+idUser+'&funcionrio='+funcionario+'">Ver</a>&nbsp;|&nbsp;<a href="edit_user.html?idUser='+idUser+'&idUserLista='+idUserLista+'">editar</a></td></tr>';
         }
        
     },
