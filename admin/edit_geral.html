@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +8,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    NINA - Perfil Usuário
+    NINA - Usuários
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -18,6 +19,10 @@
   <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+
+  <style>
+    
+  </style>
 </head>
 
 <body class="">
@@ -40,12 +45,12 @@
       <div class="sidebar-wrapper">
         <ul class="nav" id="listarMenu">
          
-          <!--li class="active-pro">
+          <li class="active-pro">
             <a href="./upgrade.html">
               <i class="nc-icon nc-spaceship"></i>
               <p>Upgrade to PRO</p>
             </a>
-          </li-->
+          </li>
         </ul>
       </div>
     </div>
@@ -61,7 +66,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Administação de clientes</a>
+            <a class="navbar-brand" href="javascript:;">Edição Tabela Geral</a>
             <button class="btn btn-primary btn-round" onclick="verListagemClientes()" id="BtnListagem" style="display: none;">Listagem</button>
             
             
@@ -76,140 +81,171 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
-        <div class="row">
-        
-          <div class="col-md-12">
+        <div class="row" id="form_cliente" style="display:block;">
+          <div class="col-md-8">
             <div class="card card-user">
               <div class="card-header">
-                <h5 class="card-title">Ver Registro</h5>
+                <h5 class="card-title"></h5>
               </div>
               <div class="card-body">
-                <form>
-                  <div class="row">
-                    <div class="col-md-5 pr-1">
-                      <div class="form-group">
-                        <label>Responsavel (idUser)</label>
-                        <div id="idUserEdit"></div>
-                        <!--input type="hidden" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc."-->
-                      </div>
-                    </div>
-                    <div class="col-md-3 px-1">
-                      <div class="form-group">
-                        <label>funcionário</label>
-                        <div id="funcionrio"></div>
-                        <!--input type="text" class="form-control" placeholder="Username" value="michael23"-->
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">vínculo</label>
-                        <div id="vnculo"></div>
-                        <!--input type="email" class="form-control" placeholder="Email"-->
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">cargo</label>
-                        <div id="cargo"></div>
-                        <!--input type="email" class="form-control" placeholder="Email"-->
-                      </div>
-                    </div>
-                  </div>
+                <form action="#" id="editGeral" method="post">
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label>equipamento</label>
-                        <div id="equipamento"></div> 
-                        <!--input type="text" class="form-control" placeholder="Company" value="Chet"-->
-                      </div>
-                    </div>
-                    <div class="col-md-6 pl-1">
-                      <div class="form-group">
-                        <label>matrcula</label>
-                        <div id="matrcula"></div> 
-                        <!--input type="text" class="form-control" placeholder="Last Name" value="Faker"-->
-                      </div>
-                    </div>
-                  </div>
-                 
-                  <div class="row">
-                    <div class="col-md-4 pr-1">
-                      <div class="form-group">
-                        <label>telefones</label>
-                        <div id="telefones"></div>
+                        <!--label>Representante</label-->
                         
+                        <div id="mostraUser"></div>
+                        <div id="idUserEdit"></div>
                       </div>
                     </div>
-                    <div class="col-md-4 px-1">
-                      <div class="form-group">
-                        <label>data_admisso</label>
-                        <div id="data_admisso"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>turno</label>
-                        <div id="turno"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>endereo_bairro</label>
-                        <div id="endereo_bairro"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>data_incio_e_fim_aviso_prvio</label>
-                        <div id="data_incio_e_fim_aviso_prvio"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>email</label>
-                        <div id="email"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>cpf</label>
-                        <div id="cpf"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>telefones1</label>
-                        <div id="telefones1"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>obs</label>
-                        <div id="obs"></div>
-                      </div>
-                    </div>
-
                   </div>
-                 
                   <div class="row">
-                    <div class="update ml-auto mr-auto">
-                      <div id="btn_UpdateUser"></div>
-                      
+                    <div class="col-md-8 pr-1">
+                        
+                        <div class="form-group">
+                          <label>Funcionário</label>
+                          <div id="funcionrio"></div>
+                          
+                        </div>
+                        <div class="form-group">
+                            <label>Vínculo</label>
+                            <div id="vnculo"></div>
+                            
+                          </div>
+                      </div>
+                      <div class="col-md-8 pr-1">
+                          <div class="form-group">
+                            <label>Cargo</label>
+                            <div id="cargo"></div>
+                            
+                          </div>
+                      </div>
+                      <div class="col-md-8 pr-1">
+                          <div class="form-group">
+                            <label>Equipamento</label>
+                            <div id="equipamento"></div>
+                            
+                          </div>
+                      </div>
+                    
+                      <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>Matrícula</label>
+                          <div id="matrcula"></div>
+                          
+                        </div>
                     </div>
+                    <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>Telefones</label>
+                          <div id="telefones"></div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>data_admisso</label>
+                          <div id="data_admisso"></div>
+                          
+                        </div>
+                    </div>
+                      <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>Turno</label>
+                          <div id="turno"></div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>Endereo Bairro</label>
+                          <div id="endereo_bairro"></div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>data_incio_e_fim_aviso_prévio</label>
+                          <div id="data_incio_e_fim_aviso_prvio"></div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>Email</label>
+                          <div id="email"></div>
+                          
+                        </div>
+                    </div>
+                     <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>CPF</label>
+                          <div id="cpf"></div>
+                          
+                        </div>
+                    </div>
+                    
+                     <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>Telefones1</label>
+                          <div id="telefones1"></div>
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                          <label>OBS</label>
+                          <div id="obs"></div>
+                          
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                      <div class="d-flex justify-content-start gap-2">
+                        <!-- Botão de Voltar -->
+                        <div id="btn_voltarEditUser"></div>
+
+                        <!-- Botão de Atualizar -->
+                        <input type="submit" class="btn btn-primary" value="Atualizar"/>
+                      </div>
+                    </div>
+                    
+                   
                   </div>
+                  
                 </form>
               </div>
             </div>
           </div>
         </div>
+        
       </div>
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
-          
+          <div class="row">
+            <nav class="footer-nav">
+              <ul>
+                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
+                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
+                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
+              </ul>
+            </nav>
+            <div class="credits ml-auto">
+              <span class="copyright">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+              </span>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
   </div>
+  <script src="../assets/js/jquery-2.2.3.min.js"></script>
+  <script src="../assets/js/form-ajax.js"></script>
+ 
+  
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
@@ -224,27 +260,7 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
-  <script src="../assets/js/validarUser.js"></script>  
   <script>
-
-    function btn_UpdatePerfil(){
-      var query = location.search.slice(1);
-      var partes = query.split('&');
-      var datas = {};
-      partes.forEach(function (parte) {
-        var chaveValor = parte.split('=');
-        var chave = chaveValor[0];
-        var valor = chaveValor[1];
-        datas[chave] = valor;
-      });
-
-      var idUser        = datas.idUser
-      var idUserEdit    = datas.idUserLista
-      document.getElementById('btn_UpdateUser').innerHTML   = '<a href="http://localhost/nina/admin/edit_user.html?idUser='+idUser+'&idUserLista='+idUserEdit+'" class="btn btn-primary btn-round">Atualizar Perfil</a>'
-      
-    }
-    btn_UpdatePerfil()
-    
     function validarLogin(){
       $.ajax({
       type: "GET",
@@ -263,7 +279,21 @@
     });
   } 
   validarLogin()
-   
+    function mostrarBtnEditUser(){
+      var query = location.search.slice(1);
+      var partes = query.split('&');
+      var datas = {};
+      partes.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        datas[chave] = valor;
+      });
+
+      var idUser        = datas.idUser
+      document.getElementById('btn_voltarEditUser').innerHTML = '<a href="criar_user.html?idUser='+idUser+'" class="btn btn-primary" id="btn_voltarEditUser">Voltar</a>'
+    }
+    mostrarBtnEditUser()
 
     function mudarTipoUser(idUserApagar, tipo) {
     $.ajax({
@@ -322,7 +352,7 @@
 
       $.ajax({
           type: "GET",
-          url: "http://localhost/nina/php/VerGeral.php?idUser="+idUser+"&funcionrio="+funcionrio,
+          url: "http://localhost/nina/php/listaEditGeral.php?idUser="+idUser+"&funcionrio="+funcionrio,
           contentType: false,
           cache: false,
           dataType: "json",
@@ -333,41 +363,38 @@
               for(var i = 0; i<retorno.length; i++){
                 
                   
-                  let funcionrio          = retorno[i].funcionrio;
-                  let vnculo              = retorno[i].vnculo; 
-                  let cargo          = retorno[i].cargo;
-                  let equipamento               = retorno[i].equipamento;
-                  let matrcula                  = retorno[i].matrcula;
-                  let telefones                 = retorno[i].telefones;
-                  let data_admisso              = retorno[i].data_admisso;
-                  let endereo_bairro            = retorno[i].endereo_bairro;
-                  let data_incio_e_fim_aviso_prvio            = retorno[i].data_incio_e_fim_aviso_prvio;
-                  let email            = retorno[i].email;
-                  let cpf            = retorno[i].cpf;
-                  let telefones1   = retorno[i].telefones1
-                  let obs            = retorno[i].obs;
+                  let funcionrio            = retorno[i].funcionrio;
+                  let vnculo                = retorno[i].vnculo; 
+                  let cargo                 = retorno[i].cargo;
+                  let equipamento           = retorno[i].equipamento;
+                  let matrcula              = retorno[i].matrcula;
+                  let telefones             = retorno[i].telefones;
+                  let data_admisso          = retorno[i].data_admisso;
+                  let turno                 = retorno[i].turno;
+                  let endereo_bairro        = retorno[i].endereo_bairro;
+                  let data_incio_e_fim_aviso_prvio        = retorno[i].data_incio_e_fim_aviso_prvio;
+                  let email                               = retorno[i].email;
+                  let cpf                                 = retorno[i].cpf;
+                  let telefones1                          = retorno[i].telefones1;
+                  let obs                                 = retorno[i].obs;
+    
 
-                  //document.getElementById('idUserEdit').innerHTML   = '<input type="text" class="form-control" placeholder="Nome do cliente" name="idUserEdit" value="'+idUserEdit+'" disabled>'
-                  document.getElementById('funcionrio').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="funcionario" value="'+funcionrio+'" disabled>'
-                  document.getElementById('vnculo').innerHTML     = '<input type="tel" class="form-control" name="vinculo" maxlength="15" placeholder="(99) 99999-9999" value="'+vnculo+'" id="vnculo" disabled>'
-                  document.getElementById('cargo').innerHTML        = '<input type="text" class="form-control" placeholder="" name="cargo" value="'+cargo+'" disabled>'
-                  document.getElementById('equipamento').innerHTML     = '<input type="text" class="form-control" placeholder="" name="equipamento" value="'+equipamento+'" disabled>'
-                  document.getElementById('matrcula').innerHTML        = '<input type="text" class="form-control" placeholder="" name="matricula" value="'+matrcula+'" disabled>'
-                  document.getElementById('telefones').innerHTML        = '<input type="tel" class="form-control" placeholder="" name="telefones" value="'+telefones+'" id="telefone" disabled>'
-                  document.getElementById('data_admisso').innerHTML        = '<input type="text" class="form-control" placeholder="" name="data_admisso" value="'+data_admisso+'" disabled>'
-                  document.getElementById('turno').innerHTML        = '<input type="text" class="form-control" placeholder="" name="turno" value="'+turno+'" disabled>'
-                  
-                  document.getElementById('endereo_bairro').innerHTML        = '<input type="text" class="form-control" placeholder="" name="endereo_bairro" value="'+endereo_bairro+'" disabled>'
-                  document.getElementById('data_incio_e_fim_aviso_prvio').innerHTML        = '<input type="text" class="form-control" placeholder="" name="data_incio_e_fim_aviso_prvio" value="'+data_incio_e_fim_aviso_prvio+'" disabled>'
-                  document.getElementById('email').innerHTML        = '<input type="text" class="form-control" placeholder="" name="email" value="'+email+'" disabled>'
-                  document.getElementById('cpf').innerHTML        = '<input type="text" class="form-control" placeholder="" name="cpf" value="'+cpf+'" disabled>'
-                  document.getElementById('telefones1').innerHTML        = '<input type="text" class="form-control" placeholder="" name="telefones1" value="'+telefones1+'" disabled>'
-                  document.getElementById('obs').innerHTML        = '<input type="text" class="form-control" placeholder="" name="obs" value="'+obs+'" disabled>'
+                  //document.getElementById('idUserEdit').innerHTML   = '<input type="hidden" class="form-control" placeholder="Nome do cliente" name="idUserEdit" value="'+idUserEdit+'">'
+                  document.getElementById('funcionrio').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="funcionrio" value="'+funcionrio+'">'
+                  document.getElementById('vnculo').innerHTML             = '<input type="text" class="form-control" placeholder="Nome do cliente" name="vnculo" value="'+vnculo+'">'
+                  document.getElementById('cargo').innerHTML              = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cargo" value="'+cargo+'">'
+                  document.getElementById('matrcula').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="matrcula" value="'+matrcula+'">'
+                  document.getElementById('telefones').innerHTML        = '<input type="tel" class="form-control" placeholder="" name="telefones" value="'+telefones+'" id="telefone">'
+                  document.getElementById('data_admisso').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_admisso" value="'+data_admisso+'">'
+                  document.getElementById('turno').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="turno" value="'+turno+'">'
+                  document.getElementById('endereo_bairro').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="endereo_bairro" value="'+endereo_bairro+'">'
+                  document.getElementById('data_incio_e_fim_aviso_prvio').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_incio_e_fim_aviso_prvio" value="'+data_incio_e_fim_aviso_prvio+'">'
+                  document.getElementById('email').innerHTML        = '<input type="email" class="form-control" placeholder="" name="email" value="'+email+'">'
+                  document.getElementById('cpf').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cpf" value="'+cpf+'">'
+                  document.getElementById('telefones1').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="telefones1" value="'+telefones1+'">'
+                  document.getElementById('obs').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="obs" value="'+obs+'">'
                   
                   
-                  
-                 
-                
                   //document.getElementById('idcliente').innerHTML = '<input type="hidden" name="idCliente" value="'+idCliente+'" >' 
               }
             
@@ -423,7 +450,7 @@
             }); 
     
         }
-       // mostrarNomeRepresentante()
+        mostrarNomeRepresentante()
      
     function motrarMenu()
     {
@@ -509,8 +536,7 @@
       }
       dadosUser()
 
-   
-  
+    
     const MAX_IDLE_TIME = 15 * 60 * 1000; // 15 minutos em milissegundos
   
     function checkIdleTime() {
@@ -539,6 +565,8 @@
  
 </script>
 
+
+   
 </body>
 
 </html>

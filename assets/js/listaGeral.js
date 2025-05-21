@@ -8,42 +8,70 @@ partes.forEach(function (parte) {
   datas[chave] = valor;
 });
 
-var idUser = datas.idUser
-var idUserLista = 0
-$.ajax({
+var idUser = datas.idUser;
+linhasPorPagina = 10;
+paginaAtual = 1;
+
+function carregarPagina(pagina) {
+  datas.pagina = pagina;
+  datas.limite = linhasPorPagina;
+
+  $.ajax({
     type: "POST",
     url: "http://localhost/nina/php/listaGeral.php",
-    contentType: false,
-    cache: false,
-    dataType: "json",
     data: datas,
-    processData:false,
-    success: function(retorno){
-        console.log(retorno);
-        for(var i = 0; i<retorno.length; i++){
-            
-            var funcionario         = retorno[i].funcionrio;
-            var vinculo              = retorno[i].vnculo;
-            var cargo               = retorno[i].cargo;
-            var equipamento         = retorno[i].equipamento;
-            var matricula           = retorno[i].matrcula;
-            var telefones           = retorno[i].telefones;
-            var data_admisso        = retorno[i].data_admisso;
-            var turno =retorno[i].turno;
-            var endereo_bairro =retorno[i].endereo_bairro;
-            var data_incio_e_fim_aviso_prvio = retorno[i].data_incio_e_fim_aviso_prvio
-            var email               = retorno[i].email;
-            var cpf                 = retorno[i].cpf;
-            var telefones1          = retorno[i].telefones1;
-            var obs                 = retorno[i].obs;
+    dataType: "json",
+    success: function(retorno) {
+      var lista = retorno.dados;
+      var totalPaginas = retorno.totalPaginas;
+      var html = '';
 
-            
-            document.getElementById("listaGeral").innerHTML += '<tr class="linhas"><td>'+funcionario+'</td><td>'+vinculo+'</td><td>'+cargo+'</td><td>'+equipamento+'</td><td>'+matricula+'</td><td>'+data_admisso+'</td><td class="text-right"><a href="verGeral.html?idUser='+idUser+'&funcionrio='+funcionario+'">Ver</a>&nbsp;|&nbsp;<a href="edit_user.html?idUser='+idUser+'&idUserLista='+idUserLista+'">editar</a></td></tr>';
-        }
-       
+      lista.forEach(function(item) {
+        var funcionario = item.funcionrio || '';
+        var vinculo = item.vnculo || '';
+        var cargo = item.cargo || '';
+        var equipamento = item.equipamento || '-';
+        var matricula = item.matrcula || '-';
+        var data_admisso = item.data_admisso || '';
+
+        html += '<tr class="linhas">' +
+                  '<td>' + funcionario + '</td>' +
+                  '<td>' + vinculo + '</td>' +
+                  '<td>' + cargo + '</td>' +
+                  '<td>' + equipamento + '</td>' +
+                  '<td>' + matricula + '</td>' +
+                  '<td>' + data_admisso + '</td>' +
+                  '<td class="text-right">' +
+                    '<a href="verGeral.html?idUser=' + idUser + '&funcionrio=' + encodeURIComponent(funcionario) + '">Ver</a>&nbsp;|&nbsp;' +
+                    '<a href="edit_geral.html?idUser=' + idUser + '&funcionrio=' + encodeURIComponent(funcionario) + '">Editar</a>' +
+                  '</td>' +
+                '</tr>';
+      });
+
+      document.getElementById("listaGeral").innerHTML = html;
+      atualizarControles(pagina, totalPaginas);
     },
-      error: function(xhr, status, error) {
-      alert('erro')
-      alert(xhr.responseText);
+    error: function(xhr) {
+      alert('Erro ao carregar os dados');
+      console.error(xhr.responseText);
     }
-  }); 
+  });
+}
+
+function atualizarControles(paginaAtual, totalPaginas) {
+  var html = '';
+  if (paginaAtual > 1) {
+    html += '<button onclick="carregarPagina(' + (paginaAtual - 1) + ')">Anterior</button> ';
+  }
+
+  html += '<strong>Página ' + paginaAtual + ' de ' + totalPaginas + '</strong>';
+
+  if (paginaAtual < totalPaginas) {
+    html += ' <button onclick="carregarPagina(' + (paginaAtual + 1) + ')">Próxima</button>';
+  }
+
+  document.getElementById("paginacao").innerHTML = html;
+}
+
+// Carrega a primeira página ao iniciar
+carregarPagina(1);

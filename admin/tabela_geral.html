@@ -247,35 +247,26 @@
             <div class="card-header">
               <h4 class="card-title"> Tabela Geral</h4>
               <p class="card-category"> Atualize seus contatos para melhores resultados</p>
+              <div id="paginacao" class="text-center mt-3"></div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table">
-                  <thead class=" text-primary">
-                    <th>
-                      Funcionário
-                    </th>
-                    <th>
-                      Vinculo
-                    </th>
-                    <th>
-                      Cargo
-                    </th>
-                    <th>
-                      Equipamento
-                    </th>
-                    <th>
-                      Matricula
-                    </th>
-                    <th>
-                      data_admimissao
-                    </th>
-                    <th class="text-right">
-                    </th>
+               <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Funcionário</th>
+                      <th>Vínculo</th>
+                      <th>Cargo</th>
+                      <th>Equipamento</th>
+                      <th>Matrícula</th>
+                      <th>Data de Admissão</th>
+                      <th>Ações</th>
+                    </tr>
                   </thead>
-                  <tbody id="listaGeral">
-                  </tbody>
+                  <tbody id="listaGeral"></tbody>
                 </table>
+
+                
               </div>
             </div>
           </div>
@@ -546,6 +537,72 @@ function sair() {
     })
   </script>
 
+ <script>
+  const linhasPorPagina = 50;
+  let paginaAtual = 1;
+  let totalPaginas = 1;
+
+  async function carregarPagina(pagina) {
+    try {
+      const response = await fetch(`../php/listaGeral.php?pagina=${pagina}&limite=${linhasPorPagina}`);
+      const json = await response.json();
+
+      const dados = json.dados;
+      totalPaginas = json.totalPaginas;
+      paginaAtual = pagina;
+
+      const corpoTabela = document.getElementById('listaGeral');
+      corpoTabela.innerHTML = '';
+
+      dados.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.funcionrio}</td>
+          <td>${item.vnculo}</td>
+          <td>${item.cargo}</td>
+          <td>${item.equipamento}</td>
+          <td>${item.matrcula}</td>
+          <td>${item.data_admisso}</td>
+
+          <!-- Adicione mais colunas conforme o seu banco -->
+        `;
+        corpoTabela.appendChild(tr);
+      });
+
+      atualizarControles();
+    } catch (erro) {
+      console.error('Erro ao carregar dados:', erro);
+    }
+  }
+
+  function atualizarControles() {
+    const paginacao = document.getElementById('paginacao');
+    paginacao.innerHTML = '';
+
+    const btnAnterior = document.createElement('button');
+    btnAnterior.textContent = 'Anterior';
+    btnAnterior.disabled = paginaAtual === 1;
+    btnAnterior.onclick = () => carregarPagina(paginaAtual - 1);
+    paginacao.appendChild(btnAnterior);
+
+    for (let i = 1; i <= totalPaginas; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.disabled = i === paginaAtual;
+      btn.onclick = () => carregarPagina(i);
+      paginacao.appendChild(btn);
+    }
+
+    const btnProxima = document.createElement('button');
+    btnProxima.textContent = 'Próxima';
+    btnProxima.disabled = paginaAtual === totalPaginas;
+    btnProxima.onclick = () => carregarPagina(paginaAtual + 1);
+    paginacao.appendChild(btnProxima);
+  }
+
+  // Inicializar
+  carregarPagina(1);
+</script>
 
 
 </body>

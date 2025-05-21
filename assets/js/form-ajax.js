@@ -97,6 +97,39 @@ jQuery(document).ready(function(){
   });
 });
 
+jQuery(document).ready(function(){
+  $('#editGeral').submit(function() {
+    var dados = new FormData(this);
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost/nina/php/edit_geral.php",
+      data: dados,
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function(retorno){
+        console.log(retorno);
+
+        // Verifica se o retorno contém a palavra "sucesso"
+        if (retorno.toLowerCase().includes("sucesso")) {
+          alert("Dados atualizados com sucesso!");
+          //window.location.reload(); // recarrega a página apenas se o update foi bem-sucedido
+        } else {
+          alert("Atenção: " + retorno); // mostra o erro retornado pelo PHP
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("Erro na requisição:", xhr.responseText);
+        alert("Erro ao enviar dados: " + xhr.responseText);
+      }
+    });
+
+    return false; // Impede o envio tradicional do formulário
+  });
+});
+
+
 //EDITAR CLIENTE
 jQuery(document).ready(function(){
   // Evento Submit do formulário

@@ -1,7 +1,8 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
 $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 10;
@@ -21,6 +22,7 @@ $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// JSON de resposta
 echo json_encode([
   'dados' => $dados,
   'totalPaginas' => $totalPaginas
