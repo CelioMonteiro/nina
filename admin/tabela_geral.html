@@ -524,18 +524,9 @@ function sair() {
   </script>
 
   <!-- Busca -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script>
-    function busca(value,targetSelector){
-        $(targetSelector).show();
-        $(targetSelector+':not(:contains("'+ value +'"))').hide();
-    }
-    
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    $('#search').keyup(function () {
-       busca($(this).val(), '.linhas');
-    })
-  </script>
 
  <script>
   const linhasPorPagina = 50;

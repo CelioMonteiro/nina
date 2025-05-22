@@ -9,49 +9,66 @@ partes.forEach(function (parte) {
 });
 
 var idUser = datas.idUser;
-linhasPorPagina = 10;
+
+linhasPorPagina = 50;
 paginaAtual = 1;
+
+  var datas = {};
+    var linhasPorPagina = 50;
+    
+    function busca(value, targetSelector) {
+      var termo = value.toLowerCase();
+
+      $(targetSelector).each(function () {
+        var texto = $(this).text().toLowerCase();
+        if (texto.indexOf(termo) > -1) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    }
 
 function carregarPagina(pagina) {
   datas.pagina = pagina;
   datas.limite = linhasPorPagina;
 
   $.ajax({
-    type: "POST",
+    type: "GET",
     url: "http://localhost/nina/php/listaGeral.php",
     data: datas,
     dataType: "json",
-    success: function(retorno) {
+    success: function (retorno) {
       var lista = retorno.dados;
       var totalPaginas = retorno.totalPaginas;
       var html = '';
 
-      lista.forEach(function(item) {
+      lista.forEach(function (item) {
         var funcionario = item.funcionrio || '';
         var vinculo = item.vnculo || '';
         var cargo = item.cargo || '';
         var equipamento = item.equipamento || '-';
         var matricula = item.matrcula || '-';
-        var data_admisso = item.data_admisso || '';
+        var data_admisso = item.data_admisso || '-';
 
-        html += '<tr class="linhas">' +
-                  '<td>' + funcionario + '</td>' +
-                  '<td>' + vinculo + '</td>' +
-                  '<td>' + cargo + '</td>' +
-                  '<td>' + equipamento + '</td>' +
-                  '<td>' + matricula + '</td>' +
-                  '<td>' + data_admisso + '</td>' +
-                  '<td class="text-right">' +
-                    '<a href="verGeral.html?idUser=' + idUser + '&funcionrio=' + encodeURIComponent(funcionario) + '">Ver</a>&nbsp;|&nbsp;' +
-                    '<a href="edit_geral.html?idUser=' + idUser + '&funcionrio=' + encodeURIComponent(funcionario) + '">Editar</a>' +
-                  '</td>' +
-                '</tr>';
+        html += '<tr class="linhas">';
+        html += '<td>' + funcionario + '</td>';
+        html += '<td>' + vinculo + '</td>';
+        html += '<td>' + cargo + '</td>';
+        html += '<td>' + equipamento + '</td>';
+        html += '<td>' + matricula + '</td>';
+        html += '<td>' + data_admisso + '</td>';
+        html += '<td class="text-right">';
+        html += '<a href="verGeral.html?idUser=' + encodeURIComponent(idUser) + '&funcionrio=' + encodeURIComponent(funcionario) + '">Ver</a>';
+        html += ' | ';
+        html += '<a href="edit_geral.html?idUser=' + encodeURIComponent(idUser) + '&funcionrio=' + encodeURIComponent(funcionario) + '">Editar</a>';
+        html += '</td></tr>';
       });
 
-      document.getElementById("listaGeral").innerHTML = html;
-      atualizarControles(pagina, totalPaginas);
+      $('#listaGeral').html(html);
+      atualizarControles(pagina, totalPaginas); // 🔥 isso aqui faz a mágica voltar
     },
-    error: function(xhr) {
+    error: function (xhr) {
       alert('Erro ao carregar os dados');
       console.error(xhr.responseText);
     }
@@ -60,18 +77,29 @@ function carregarPagina(pagina) {
 
 function atualizarControles(paginaAtual, totalPaginas) {
   var html = '';
-  if (paginaAtual > 1) {
-    html += '<button onclick="carregarPagina(' + (paginaAtual - 1) + ')">Anterior</button> ';
+  for (var i = 1; i <= totalPaginas; i++) {
+    if (i === paginaAtual) {
+      html += '<strong style="margin: 0 5px;">' + i + '</strong>';
+    } else {
+      html += '<a href="#" class="pagina-link" data-pagina="' + i + '" style="margin: 0 5px;">' + i + '</a>';
+    }
   }
-
-  html += '<strong>Página ' + paginaAtual + ' de ' + totalPaginas + '</strong>';
-
-  if (paginaAtual < totalPaginas) {
-    html += ' <button onclick="carregarPagina(' + (paginaAtual + 1) + ')">Próxima</button>';
-  }
-
-  document.getElementById("paginacao").innerHTML = html;
+  $('#paginacao').html(html);
 }
+
+$(document).ready(function () {
+  carregarPagina(1);
+
+  $(document).on('keyup', '#search', function () {
+    busca($(this).val(), '.linhas');
+  });
+
+  $(document).on('click', '.pagina-link', function (e) {
+    e.preventDefault();
+    var pagina = $(this).data('pagina');
+    carregarPagina(pagina);
+  });
+});
 
 // Carrega a primeira página ao iniciar
 carregarPagina(1);

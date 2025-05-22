@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
-$limite = isset($_GET['limite']) ? intval($_GET['limite']) : 10;
+$limite = isset($_GET['limite']) ? intval($_GET['limite']) : 50;
 $offset = ($pagina - 1) * $limite;
 
 $conn = new PDO("mysql:host=localhost;dbname=admlerin", "root", "SuperLerin!123");
