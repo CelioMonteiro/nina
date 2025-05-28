@@ -363,7 +363,7 @@ jQuery(document).ready(function(){
           if(status == 1){
             alert('Seja Bem Vindo, ' + userName);
             sessionStorage.setItem('lastActivity', Date.now());
-            window.location.replace("http://localhost/nina/admin/criar_user.html?idUser=" + idUser);
+            window.location.replace("http://localhost/nina/admin/tabela_geral.html?idUser=" + idUser);
           }else{
             alert('Usuário(A) '+userName+' inativo no sistema');
             window.location.replace("http://localhost/nina/admin/login.html?idUser=" + idUser);
