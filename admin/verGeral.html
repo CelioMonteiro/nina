@@ -239,8 +239,8 @@
       });
 
       var idUser        = datas.idUser
-      var idUserEdit    = datas.idUserLista
-      document.getElementById('btn_UpdateUser').innerHTML   = '<a href="http://localhost/nina/admin/edit_user.html?idUser='+idUser+'&idUserLista='+idUserEdit+'" class="btn btn-primary btn-round">Atualizar Perfil</a>'
+      var funcionrio    = datas.funcionrio
+      document.getElementById('btn_UpdateUser').innerHTML   = '<a href="http://localhost/nina/admin/edit_geral.html?idUser='+idUser+'&funcionrio='+funcionrio+'" class="btn btn-primary btn-round">Atualizar Perfil</a>'
       
     }
     btn_UpdatePerfil()
@@ -320,64 +320,76 @@
       var idUser        = datas.idUser
       var funcionrio    = datas.funcionrio
 
-      $.ajax({
-          type: "GET",
-          url: "http://localhost/nina/php/VerGeral.php?idUser="+idUser+"&funcionrio="+funcionrio,
-          contentType: false,
-          cache: false,
-          dataType: "json",
-          data: datas,
-          processData:false,
-          success: function(retorno){
-              console.log(retorno);
-              for(var i = 0; i<retorno.length; i++){
-                
-                  
-                  let funcionrio          = retorno[i].funcionrio;
-                  let vnculo              = retorno[i].vnculo; 
-                  let cargo          = retorno[i].cargo;
-                  let equipamento               = retorno[i].equipamento;
-                  let matrcula                  = retorno[i].matrcula;
-                  let telefones                 = retorno[i].telefones;
-                  let data_admisso              = retorno[i].data_admisso;
-                  let endereo_bairro            = retorno[i].endereo_bairro;
-                  let data_incio_e_fim_aviso_prvio            = retorno[i].data_incio_e_fim_aviso_prvio;
-                  let email            = retorno[i].email;
-                  let cpf            = retorno[i].cpf;
-                  let telefones1   = retorno[i].telefones1
-                  let obs            = retorno[i].obs;
+     $.ajax({
+    type: "GET",
+    url: "http://localhost/nina/php/VerGeral.php?idUser=" + idUser + "&funcionrio=" + funcionrio,
+    contentType: false,
+    cache: false,
+    dataType: "json",
+    data: datas,
+    processData: false,
+    success: function(retorno) {
+        console.log(retorno);
+        for (var i = 0; i < retorno.length; i++) {
 
-                  //document.getElementById('idUserEdit').innerHTML   = '<input type="text" class="form-control" placeholder="Nome do cliente" name="idUserEdit" value="'+idUserEdit+'" disabled>'
-                  document.getElementById('funcionrio').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="funcionario" value="'+funcionrio+'" disabled>'
-                  document.getElementById('vnculo').innerHTML     = '<input type="tel" class="form-control" name="vinculo" maxlength="15" placeholder="(99) 99999-9999" value="'+vnculo+'" id="vnculo" disabled>'
-                  document.getElementById('cargo').innerHTML        = '<input type="text" class="form-control" placeholder="" name="cargo" value="'+cargo+'" disabled>'
-                  document.getElementById('equipamento').innerHTML     = '<input type="text" class="form-control" placeholder="" name="equipamento" value="'+equipamento+'" disabled>'
-                  document.getElementById('matrcula').innerHTML        = '<input type="text" class="form-control" placeholder="" name="matricula" value="'+matrcula+'" disabled>'
-                  document.getElementById('telefones').innerHTML        = '<input type="tel" class="form-control" placeholder="" name="telefones" value="'+telefones+'" id="telefone" disabled>'
-                  document.getElementById('data_admisso').innerHTML        = '<input type="text" class="form-control" placeholder="" name="data_admisso" value="'+data_admisso+'" disabled>'
-                  document.getElementById('turno').innerHTML        = '<input type="text" class="form-control" placeholder="" name="turno" value="'+turno+'" disabled>'
-                  
-                  document.getElementById('endereo_bairro').innerHTML        = '<input type="text" class="form-control" placeholder="" name="endereo_bairro" value="'+endereo_bairro+'" disabled>'
-                  document.getElementById('data_incio_e_fim_aviso_prvio').innerHTML        = '<input type="text" class="form-control" placeholder="" name="data_incio_e_fim_aviso_prvio" value="'+data_incio_e_fim_aviso_prvio+'" disabled>'
-                  document.getElementById('email').innerHTML        = '<input type="text" class="form-control" placeholder="" name="email" value="'+email+'" disabled>'
-                  document.getElementById('cpf').innerHTML        = '<input type="text" class="form-control" placeholder="" name="cpf" value="'+cpf+'" disabled>'
-                  document.getElementById('telefones1').innerHTML        = '<input type="text" class="form-control" placeholder="" name="telefones1" value="'+telefones1+'" disabled>'
-                  document.getElementById('obs').innerHTML        = '<input type="text" class="form-control" placeholder="" name="obs" value="'+obs+'" disabled>'
-                  
-                  
-                  
-                 
-                
-                  //document.getElementById('idcliente').innerHTML = '<input type="hidden" name="idCliente" value="'+idCliente+'" >' 
-              }
-            
-          },
-            error: function(xhr, status, error) {
-            alert('erro')
-            alert(xhr.responseText);
-          }
-        }); 
+            let funcionrio = retorno[i].funcionrio;
+            let vnculo = retorno[i].vnculo;
+            let cargo = retorno[i].cargo;
+            let equipamento = retorno[i].equipamento;
+            let matrcula = retorno[i].matrcula;
+            let telefones = retorno[i].telefones;
+            let data_admisso = retorno[i].data_admisso;
+            let endereo_bairro = retorno[i].endereo_bairro;
+            let data_incio_e_fim_aviso_prvio = retorno[i].data_incio_e_fim_aviso_prvio;
+            let email = retorno[i].email;
+            let cpf = retorno[i].cpf;
+            let telefones1 = retorno[i].telefones1
+            let obs = retorno[i].obs;
+            let turno = retorno[i].turno;
 
+            // --- Validação dos campos para 'null', undefined ou strings vazias, usando legendas descritivas ---
+
+            funcionrio = funcionrio == null || funcionrio === 'null' || funcionrio === '' ? 'Não Informado' : funcionrio;
+            vnculo = vnculo == null || vnculo === 'null' || vnculo === '' ? 'Não Informado' : vnculo;
+            cargo = cargo == null || cargo === 'null' || cargo === '' ? 'Não Informado' : cargo;
+            equipamento = equipamento == null || equipamento === 'null' || equipamento === '' ? 'Não Informado' : equipamento;
+            matrcula = matrcula == null || matrcula === 'null' || matrcula === '' ? 'Sem Registro' : matrcula; // Específico para matrícula
+            telefones = telefones == null || telefones === 'null' || telefones === '' ? 'Não Informado' : telefones;
+            data_admisso = data_admisso == null || data_admisso === 'null' || data_admisso === '' ? 'Não Informado' : data_admisso;
+            endereo_bairro = endereo_bairro == null || endereo_bairro === 'null' || endereo_bairro === '' ? 'Não Informado' : endereo_bairro;
+            data_incio_e_fim_aviso_prvio = data_incio_e_fim_aviso_prvio == null || data_incio_e_fim_aviso_prvio === 'null' || data_incio_e_fim_aviso_prvio === '' ? 'Não Informado' : data_incio_e_fim_aviso_prvio;
+            email = email == null || email === 'null' || email === '' ? 'Não Informado' : email;
+            cpf = cpf == null || cpf === 'null' || cpf === '' ? 'Não Informado' : cpf;
+            telefones1 = telefones1 == null || telefones1 === 'null' || telefones1 === '' ? 'Não Informado' : telefones1;
+            obs = obs == null || obs === 'null' || obs === '' ? 'Não Informado' : obs;
+            turno = turno == null || turno === 'null' || turno === '' ? 'Não Informado' : turno;
+
+
+            // --- Preenchimento dos elementos HTML (sem mudanças aqui, pois as variáveis já foram ajustadas) ---
+            document.getElementById('funcionrio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="funcionario" value="' + funcionrio + '" disabled>';
+            document.getElementById('vnculo').innerHTML = '<input type="tel" class="form-control" name="vinculo" maxlength="15" placeholder="(99) 99999-9999" value="' + vnculo + '" id="vnculo" disabled>';
+            document.getElementById('cargo').innerHTML = '<input type="text" class="form-control" placeholder="" name="cargo" value="' + cargo + '" disabled>';
+            document.getElementById('equipamento').innerHTML = '<input type="text" class="form-control" placeholder="" name="equipamento" value="' + equipamento + '" disabled>';
+            document.getElementById('matrcula').innerHTML = '<input type="text" class="form-control" placeholder="" name="matricula" value="' + matrcula + '" disabled>';
+            document.getElementById('telefones').innerHTML = '<input type="tel" class="form-control" placeholder="" name="telefones" value="' + telefones + '" id="telefone" disabled>';
+            document.getElementById('data_admisso').innerHTML = '<input type="text" class="form-control" placeholder="" name="data_admisso" value="' + data_admisso + '" disabled>';
+            document.getElementById('turno').innerHTML = '<input type="text" class="form-control" placeholder="" name="turno" value="' + turno + '" disabled>';
+
+            document.getElementById('endereo_bairro').innerHTML = '<input type="text" class="form-control" placeholder="" name="endereo_bairro" value="' + endereo_bairro + '" disabled>';
+            document.getElementById('data_incio_e_fim_aviso_prvio').innerHTML = '<input type="text" class="form-control" placeholder="" name="data_incio_e_fim_aviso_prvio" value="' + data_incio_e_fim_aviso_prvio + '" disabled>';
+            document.getElementById('email').innerHTML = '<input type="text" class="form-control" placeholder="" name="email" value="' + email + '" disabled>';
+            document.getElementById('cpf').innerHTML = '<input type="text" class="form-control" placeholder="" name="cpf" value="' + cpf + '" disabled>';
+            document.getElementById('telefones1').innerHTML = '<input type="text" class="form-control" placeholder="" name="telefones1" value="' + telefones1 + '" disabled>';
+            document.getElementById('obs').innerHTML = '<input type="text" class="form-control" placeholder="" name="obs" value="' + obs + '" disabled>';
+
+        }
+
+    },
+    error: function(xhr, status, error) {
+        alert('Erro ao carregar os dados.');
+        console.error(xhr.responseText);
+    }
+});
     }
     mostrarDadosEditUSer()
 
