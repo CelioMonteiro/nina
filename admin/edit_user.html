@@ -299,67 +299,71 @@
       var idUser        = datas.idUser
       var idUserEdit    = datas.idUserLista
 
-      $.ajax({
-          type: "GET",
-          url: "http://localhost/nina/php/listaUser.php?idUser="+idUserEdit,
-          contentType: false,
-          cache: false,
-          dataType: "json",
-          data: datas,
-          processData:false,
-          success: function(retorno){
-              console.log(retorno);
-              for(var i = 0; i<retorno.length; i++){
-                
-                  
-                  let tipoUser          = retorno[i].tipo;
-                  let nome              = retorno[i].nome; 
-                  let telefone          = retorno[i].telefone;
-                  let email             = retorno[i].email;
-                  let endereco          = retorno[i].endereco;
-                  let cargo             = retorno[i].cargo;
-                  let status            = retorno[i].status;
+     $.ajax({
+    type: "GET",
+    url: "http://localhost/nina/php/listaUser.php?idUser=" + idUserEdit,
+    contentType: false, // Provavelmente desnecessário para GET, veja observação abaixo
+    cache: false,
+    dataType: "json",
+    data: datas, // Cuidado aqui: veja a observação sobre `data` e `processData`
+    processData: false, // Cuidado aqui: veja a observação sobre `data` e `processData`
+    success: function(retorno) {
+        console.log(retorno);
+        for (var i = 0; i < retorno.length; i++) {
 
-                  document.getElementById('idUserEdit').innerHTML   = '<input type="hidden" class="form-control" placeholder="Nome do cliente" name="idUserEdit" value="'+idUserEdit+'">'
-                  document.getElementById('nome').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="nome" value="'+nome+'">'
-                  document.getElementById('telefone').innerHTML     = '<input type="tel" class="form-control" name="telefone" maxlength="15" placeholder="(99) 99999-9999" value="'+telefone+'" id="telefone">'
-                  document.getElementById('email').innerHTML        = '<input type="email" class="form-control" placeholder="" name="email" value="'+email+'">'
-                  document.getElementById('endereco').innerHTML     = '<input type="text" class="form-control" placeholder="" name="endereco" value="'+endereco+'">'
-                  document.getElementById('cargo').innerHTML        = '<input type="text" class="form-control" placeholder="" name="cargo" value="'+cargo+'">'
-                  
-                  if(tipoUser == 0){
-                    
-                    document.getElementById('tipoLista').innerHTML       = '<input type="hidden" class="form-control" placeholder="" name="tipo" value="'+tipoUser+'"> <h5 class="card-title">Admin</h5>'
-                    document.getElementById('idEditTipo').innerHTML = '<a href="#" onclick="mudarTipoUser('+idUserEdit+',1)">Consultor</a>'
-                  }
-                  else
-                  {
-                    document.getElementById('tipoLista').innerHTML       = '<input type="hidden" class="form-control" placeholder="" name="status" value="'+tipoUser+'"> <h5 class="card-title">Consultor</h5>'
-                    document.getElementById('idEditTipo').innerHTML = '<a href="#" onclick="mudarTipoUser('+idUserEdit+', 0)">Admin</a>'
-                  }
+            let tipoUser = retorno[i].tipo;
+            let nome = retorno[i].nome;
+            let telefone = retorno[i].telefone;
+            let email = retorno[i].email;
+            let endereco = retorno[i].endereco;
+            let cargo = retorno[i].cargo;
+            let status = retorno[i].status;
 
-                  if(status == 1){
-                    document.getElementById('status').innerHTML     = '<input type="hidden" class="form-control" placeholder="" name="status" value="'+status+'" ><h5 class="card-title">Ativo</h5>'
-                    document.getElementById('idUserApagar').innerHTML = '<a href="#" onclick="desativarUser('+idUserEdit+','+status+')">Desativar</a>'
+            // --- Validação dos campos para 'null', undefined ou strings vazias ---
+            // Usando 'Não Informado' como padrão, você pode ajustar para algo mais específico se desejar.
 
-                  }
-                  else
-                  {
-                    document.getElementById('status').innerHTML     = '<input type="hidden" class="form-control" placeholder="" name="status" value="'+status+'" ><h5 class="card-title">Inativo</h5>'
-                    document.getElementById('idUserApagar').innerHTML = '<a href="#" onclick="desativarUser('+idUserEdit+','+status+')">Ativar</a>'
-                  }
-                  
-                
-                  //document.getElementById('idcliente').innerHTML = '<input type="hidden" name="idCliente" value="'+idCliente+'" >' 
-              }
-            
-          },
-            error: function(xhr, status, error) {
-            alert('erro')
-            alert(xhr.responseText);
-          }
-        }); 
+            nome = nome == null || nome === 'null' || nome === '' ? 'Não Informado' : nome;
+            telefone = telefone == null || telefone === 'null' || telefone === '' ? 'Não Informado' : telefone;
+            email = email == null || email === 'null' || email === '' ? 'Não Informado' : email;
+            endereco = endereco == null || endereco === 'null' || endereco === '' ? 'Não Informado' : endereco;
+            cargo = cargo == null || cargo === 'null' || cargo === '' ? 'Não Informado' : cargo;
 
+            // idUserEdit, tipoUser e status geralmente são valores numéricos e devem ser tratados separadamente,
+            // pois 'null' ou 'undefined' podem indicar um problema lógico, não apenas um campo "vazio".
+            // Para idUserEdit, ele é passado por URL, então já deve ter um valor.
+            // Para tipoUser e status, você já tem lógica específica para 0/1.
+
+            document.getElementById('idUserEdit').innerHTML = '<input type="hidden" class="form-control" placeholder="Nome do cliente" name="idUserEdit" value="' + idUserEdit + '">';
+            document.getElementById('nome').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="nome" value="' + nome + '">';
+            document.getElementById('telefone').innerHTML = '<input type="tel" class="form-control" name="telefone" maxlength="15" placeholder="(99) 99999-9999" value="' + telefone + '" id="telefone">';
+            document.getElementById('email').innerHTML = '<input type="email" class="form-control" placeholder="" name="email" value="' + email + '">';
+            document.getElementById('endereco').innerHTML = '<input type="text" class="form-control" placeholder="" name="endereco" value="' + endereco + '">';
+            document.getElementById('cargo').innerHTML = '<input type="text" class="form-control" placeholder="" name="cargo" value="' + cargo + '">';
+
+            if (tipoUser == 0) { // Note que 0 pode ser tratado como 'null' se você não for cuidadoso no PHP
+                document.getElementById('tipoLista').innerHTML = '<input type="hidden" class="form-control" placeholder="" name="tipo" value="' + tipoUser + '"> <h5 class="card-title">Admin</h5>';
+                document.getElementById('idEditTipo').innerHTML = '<a href="#" onclick="mudarTipoUser(' + idUserEdit + ',1)">Consultor</a>';
+            } else {
+                document.getElementById('tipoLista').innerHTML = '<input type="hidden" class="form-control" placeholder="" name="status" value="' + tipoUser + '"> <h5 class="card-title">Consultor</h5>';
+                document.getElementById('idEditTipo').innerHTML = '<a href="#" onclick="mudarTipoUser(' + idUserEdit + ', 0)">Admin</a>';
+            }
+
+            if (status == 1) { // Note que 0 pode ser tratado como 'null' se você não for cuidadoso no PHP
+                document.getElementById('status').innerHTML = '<input type="hidden" class="form-control" placeholder="" name="status" value="' + status + '" ><h5 class="card-title">Ativo</h5>';
+                document.getElementById('idUserApagar').innerHTML = '<a href="#" onclick="desativarUser(' + idUserEdit + ',' + status + ')">Desativar</a>';
+            } else {
+                document.getElementById('status').innerHTML = '<input type="hidden" class="form-control" placeholder="" name="status" value="' + status + '" ><h5 class="card-title">Inativo</h5>';
+                document.getElementById('idUserApagar').innerHTML = '<a href="#" onclick="desativarUser(' + idUserEdit + ',' + status + ')">Ativar</a>';
+            }
+
+        }
+
+    },
+    error: function(xhr, status, error) {
+        alert('Erro ao carregar os dados do usuário.'); // Mensagem mais descritiva
+        console.error(xhr.responseText); // Use console.error para erros
+    }
+});
     }
     mostrarDadosEditUSer()
 

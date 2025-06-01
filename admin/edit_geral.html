@@ -350,60 +350,75 @@
       var idUser        = datas.idUser
       var funcionrio    = datas.funcionrio
 
-      $.ajax({
+     $.ajax({
           type: "GET",
-          url: "http://localhost/nina/php/listaEditGeral.php?idUser="+idUser+"&funcionrio="+funcionrio,
-          contentType: false,
+          url: "http://localhost/nina/php/listaEditGeral.php?idUser=" + idUser + "&funcionrio=" + funcionrio,
+          contentType: false, // Provavelmente desnecessário para GET, veja observação abaixo
           cache: false,
           dataType: "json",
-          data: datas,
-          processData:false,
-          success: function(retorno){
+          data: datas, // Cuidado aqui: veja a observação sobre `data` e `processData`
+          processData: false, // Cuidado aqui: veja a observação sobre `data` e `processData`
+          success: function(retorno) {
               console.log(retorno);
-              for(var i = 0; i<retorno.length; i++){
-                
-                  
-                  let funcionrio            = retorno[i].funcionrio;
-                  let vnculo                = retorno[i].vnculo; 
-                  let cargo                 = retorno[i].cargo;
-                  let equipamento           = retorno[i].equipamento;
-                  let matrcula              = retorno[i].matrcula;
-                  let telefones             = retorno[i].telefones;
-                  let data_admisso          = retorno[i].data_admisso;
-                  let turno                 = retorno[i].turno;
-                  let endereo_bairro        = retorno[i].endereo_bairro;
-                  let data_incio_e_fim_aviso_prvio        = retorno[i].data_incio_e_fim_aviso_prvio;
-                  let email                               = retorno[i].email;
-                  let cpf                                 = retorno[i].cpf;
-                  let telefones1                          = retorno[i].telefones1;
-                  let obs                                 = retorno[i].obs;
-    
+              for (var i = 0; i < retorno.length; i++) {
 
-                  //document.getElementById('idUserEdit').innerHTML   = '<input type="hidden" class="form-control" placeholder="Nome do cliente" name="idUserEdit" value="'+idUserEdit+'">'
-                  document.getElementById('funcionrio').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="funcionrio" value="'+funcionrio+'">'
-                  document.getElementById('vnculo').innerHTML             = '<input type="text" class="form-control" placeholder="Nome do cliente" name="vnculo" value="'+vnculo+'">'
-                  document.getElementById('cargo').innerHTML              = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cargo" value="'+cargo+'">'
-                  document.getElementById('matrcula').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="matrcula" value="'+matrcula+'">'
-                  document.getElementById('telefones').innerHTML        = '<input type="tel" class="form-control" placeholder="" name="telefones" value="'+telefones+'" id="telefone">'
-                  document.getElementById('data_admisso').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_admisso" value="'+data_admisso+'">'
-                  document.getElementById('turno').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="turno" value="'+turno+'">'
-                  document.getElementById('endereo_bairro').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="endereo_bairro" value="'+endereo_bairro+'">'
-                  document.getElementById('data_incio_e_fim_aviso_prvio').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_incio_e_fim_aviso_prvio" value="'+data_incio_e_fim_aviso_prvio+'">'
-                  document.getElementById('email').innerHTML        = '<input type="email" class="form-control" placeholder="" name="email" value="'+email+'">'
-                  document.getElementById('cpf').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cpf" value="'+cpf+'">'
-                  document.getElementById('telefones1').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="telefones1" value="'+telefones1+'">'
-                  document.getElementById('obs').innerHTML         = '<input type="text" class="form-control" placeholder="Nome do cliente" name="obs" value="'+obs+'">'
-                  
-                  
-                  //document.getElementById('idcliente').innerHTML = '<input type="hidden" name="idCliente" value="'+idCliente+'" >' 
+                  let funcionrio = retorno[i].funcionrio;
+                  let vnculo = retorno[i].vnculo;
+                  let cargo = retorno[i].cargo;
+                  let equipamento = retorno[i].equipamento;
+                  let matrcula = retorno[i].matrcula;
+                  let telefones = retorno[i].telefones;
+                  let data_admisso = retorno[i].data_admisso;
+                  let turno = retorno[i].turno;
+                  let endereo_bairro = retorno[i].endereo_bairro;
+                  let data_incio_e_fim_aviso_prvio = retorno[i].data_incio_e_fim_aviso_prvio;
+                  let email = retorno[i].email;
+                  let cpf = retorno[i].cpf;
+                  let telefones1 = retorno[i].telefones1;
+                  let obs = retorno[i].obs;
+
+                  // --- Validação dos campos para 'null', undefined ou strings vazias ---
+                  // Usando 'Não Informado' como padrão. "Sem Registro" é uma boa opção para matrícula.
+
+                  funcionrio = funcionrio == null || funcionrio === 'null' || funcionrio === '' ? 'Não Informado' : funcionrio;
+                  vnculo = vnculo == null || vnculo === 'null' || vnculo === '' ? 'Não Informado' : vnculo;
+                  cargo = cargo == null || cargo === 'null' || cargo === '' ? 'Não Informado' : cargo;
+                  equipamento = equipamento == null || equipamento === 'null' || equipamento === '' ? 'Não Informado' : equipamento;
+                  matrcula = matrcula == null || matrcula === 'null' || matrcula === '' ? 'Sem Registro' : matrcula; // Específico para matrícula
+                  telefones = telefones == null || telefones === 'null' || telefones === '' ? 'Não Informado' : telefones;
+                  data_admisso = data_admisso == null || data_admisso === 'null' || data_admisso === '' ? 'Não Informado' : data_admisso;
+                  turno = turno == null || turno === 'null' || turno === '' ? 'Não Informado' : turno;
+                  endereo_bairro = endereo_bairro == null || endereo_bairro === 'null' || endereo_bairro === '' ? 'Não Informado' : endereo_bairro;
+                  data_incio_e_fim_aviso_prvio = data_incio_e_fim_aviso_prvio == null || data_incio_e_fim_aviso_prvio === 'null' || data_incio_e_fim_aviso_prvio === '' ? 'Não Informado' : data_incio_e_fim_aviso_prvio;
+                  email = email == null || email === 'null' || email === '' ? 'Não Informado' : email;
+                  cpf = cpf == null || cpf === 'null' || cpf === '' ? 'Não Informado' : cpf;
+                  telefones1 = telefones1 == null || telefones1 === 'null' || telefones1 === '' ? 'Não Informado' : telefones1;
+                  obs = obs == null || obs === 'null' || obs === '' ? 'Não Informado' : obs;
+
+
+                  // --- Preenchimento dos elementos HTML (sem mudanças aqui, pois as variáveis já foram ajustadas) ---
+                  document.getElementById('funcionrio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="funcionrio" value="' + funcionrio + '">';
+                  document.getElementById('vnculo').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="vnculo" value="' + vnculo + '">';
+                  document.getElementById('cargo').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cargo" value="' + cargo + '">';
+                  document.getElementById('matrcula').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="matrcula" value="' + matrcula + '">';
+                  document.getElementById('telefones').innerHTML = '<input type="tel" class="form-control" placeholder="" name="telefones" value="' + telefones + '" id="telefone">';
+                  document.getElementById('data_admisso').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_admisso" value="' + data_admisso + '">';
+                  document.getElementById('turno').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="turno" value="' + turno + '">';
+                  document.getElementById('endereo_bairro').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="endereo_bairro" value="' + endereo_bairro + '">';
+                  document.getElementById('data_incio_e_fim_aviso_prvio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_incio_e_fim_aviso_prvio" value="' + data_incio_e_fim_aviso_prvio + '">';
+                  document.getElementById('email').innerHTML = '<input type="email" class="form-control" placeholder="" name="email" value="' + email + '">';
+                  document.getElementById('cpf').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cpf" value="' + cpf + '">';
+                  document.getElementById('telefones1').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="telefones1" value="' + telefones1 + '">';
+                  document.getElementById('obs').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="obs" value="' + obs + '">';
+
               }
-            
+
           },
-            error: function(xhr, status, error) {
-            alert('erro')
-            alert(xhr.responseText);
+          error: function(xhr, status, error) {
+              alert('Erro ao carregar os dados de edição.'); // Mensagem mais descritiva
+              console.error(xhr.responseText); // Use console.error para erros
           }
-        }); 
+      });
 
     }
     mostrarDadosEditUSer()
