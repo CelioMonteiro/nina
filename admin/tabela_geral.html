@@ -23,6 +23,20 @@
     .sidebar-wrapper {
       overflow: hidden;
     }
+
+    /* Estilo para o spinner de carregamento */
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
   </style>
 </head>
 
@@ -30,12 +44,12 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-        <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="#" class="simple-text logo-mini">
           <div class="logo-image-small">
             <img src="../assets/img/logo-small.png">
           </div>
         </a>
-        <a href="https://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="#" class="simple-text logo-normal">
           <div id="listaNomeUser"></div>
         </a>
       </div>
@@ -55,7 +69,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Administação Geral</a>
+            <a class="navbar-brand" href="javascript:;">Administração Geral</a>
             <button class="btn btn-primary btn-round" onclick="verformCliente()" id="BtnNovo">Novo</button>
             <button class="btn btn-primary btn-round" onclick="verListagemClientes()" id="BtnListagem" style="display: none;">Listagem</button>
           </div>
@@ -114,7 +128,7 @@
           <div class="col-md-8">
             <div class="card card-user">
               <div class="card-header">
-                <h5 class="card-title">Usuários</h5>
+                <h5 class="card-title">Novo Funcionário</h5>
               </div>
               <div class="card-body">
                 <form action="#" id="gravarGeral" method="post" name="gravarGeral">
@@ -130,79 +144,79 @@
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Funcionário</label>
-                        <input type="text" class="form-control" placeholder="Funcionário" name="funcionrio">
+                        <input type="text" class="form-control" placeholder="Nome Completo do Funcionário" name="funcionrio">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Vínculo</label>
-                        <input type="text" class="form-control" maxlength="15" placeholder="Vínculo" name="vnculo" id="vnculo">
+                        <input type="text" class="form-control" maxlength="15" placeholder="Vínculo (ex: CLT, PJ)" name="vnculo" id="vnculo">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Cargo</label>
-                        <input type="text" class="form-control" maxlength="15" placeholder="Cargo" name="cargo" id="cargo">
+                        <input type="text" class="form-control" maxlength="15" placeholder="Cargo (ex: Desenvolvedor)" name="cargo" id="cargo">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Equipamento</label>
-                        <input type="text" class="form-control" placeholder="equipamento" name="equipamento">
+                        <input type="text" class="form-control" placeholder="Equipamento fornecido" name="equipamento">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Matrícula</label>
-                        <input type="text" class="form-control" placeholder="Matrícula" name="matrcula">
+                        <input type="text" class="form-control" placeholder="Número de Matrícula" name="matrcula">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
-                        <label>Telefones</label>
+                        <label>Telefone Principal</label>
                         <input type="tel" class="form-control" maxlength="15" placeholder="(99) 99999-9999" name="telefones" id="telefone">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Data Admissão</label>
-                        <input type="text" class="form-control" placeholder="Data Admissão" name="data_admisso">
+                        <input type="text" class="form-control" placeholder="DD/MM/AAAA" name="data_admisso" id="dataAdmissao">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Turno</label>
-                        <input type="text" class="form-control" placeholder="Turno" name="turno">
+                        <input type="text" class="form-control" placeholder="Turno de trabalho" name="turno">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Endereço Bairro</label>
-                        <input type="text" class="form-control" placeholder="Endereço bairro" name="endereo_bairro">
+                        <input type="text" class="form-control" placeholder="Bairro do Endereço" name="endereo_bairro">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
-                        <label>Data íncio e fim aviso prévio</label>
-                        <input type="text" class="form-control" placeholder="data_incio_e_fim_aviso_prvio" name="data_incio_e_fim_aviso_prvio">
+                        <label>Data Início e Fim Aviso Prévio</label>
+                        <input type="text" class="form-control" placeholder="DD/MM/AAAA - DD/MM/AAAA" name="data_incio_e_fim_aviso_prvio" id="dataAvisoPrevio">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" placeholder="E-mail do usuario" name="email">
+                        <input type="email" class="form-control" placeholder="E-mail do funcionário" name="email">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>CPF</label>
-                        <input type="text" class="form-control" placeholder="cpf" name="cpf">
+                        <input type="text" class="form-control" placeholder="XXX.XXX.XXX-XX" name="cpf" id="cpf">
                       </div>
                     </div>
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>OBS</label>
-                        <input type="text" class="form-control" placeholder="obs" name="obs">
+                        <input type="text" class="form-control" placeholder="Observações adicionais" name="obs">
                       </div>
                     </div>
                   </div>
@@ -216,7 +230,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12" id="listagem_cliente">
+
+        <div class="col-md-12" id="listagem_cliente" style="display:block;">
           <div class="card card-plain">
             <div class="card-header">
               <h4 class="card-title"> Tabela Geral</h4>
@@ -224,27 +239,28 @@
               <div id="paginacao" class="text-center mt-3"></div>
             </div>
             <div class="card-body">
-            <div class="table-responsive" style="position: relative;"> <div id="loadingSpinner" class="loading-overlay" style="display: none;">
-                <div class="spinner-border text-primary" role="status">
-                  <span class="sr-only">Carregando...</span>
+              <div class="table-responsive" style="position: relative;">
+                <div id="loadingSpinner" class="loading-overlay" style="display: none;">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Carregando...</span>
+                  </div>
                 </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Funcionário</th>
+                      <th>Vínculo</th>
+                      <th>Cargo</th>
+                      <th>Equipamento</th>
+                      <th>Matrícula</th>
+                      <th>Data de Admissão</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="listaGeral"></tbody>
+                </table>
               </div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Funcionário</th>
-                    <th>Vínculo</th>
-                    <th>Cargo</th>
-                    <th>Equipamento</th>
-                    <th>Matrícula</th>
-                    <th>Data de Admissão</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="listaGeral"></tbody>
-              </table>
             </div>
-          </div>
           </div>
         </div>
       </div>
@@ -271,23 +287,53 @@
     </div>
   </div>
 
-  <script src="../assets/js/jquery-2.2.3.min.js"></script>
   <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
   <script src="../assets/demo/demo.js"></script>
 
   <script src="../assets/js/form-ajax.js"></script>
-  <script src="../assets/js/listaGeral.js"></script> <script src="../assets/js/validarUser.js"></script>
+  <script src="../assets/js/listaGeral.js"></script>
+  <script src="../assets/js/validarUser.js"></script>
 
   <script>
+    // Código jQuery e jQuery Mask devem estar dentro de $(document).ready()
+    $(document).ready(function() {
+      // Máscaras para o formulário de cadastro (#gravarGeral)
+      $('#telefone').mask('(00) 00000-0000');
+      $('#cpf').mask('000.000.000-00', {
+        reverse: true
+      });
+      $('#dataAdmissao').mask('00/00/0000');
+      $('#dataAvisoPrevio').mask('00/00/0000 - 00/00/0000');
+
+      // Máscaras para o formulário de edição (se houver, caso ele seja carregado dinamicamente)
+      // Exemplo (se a função mostrarDadosEditUSer for chamada após o carregamento do DOM)
+      // Se você tiver um formulário de edição que carrega inputs dinamicamente,
+      // as máscaras devem ser aplicadas DENTRO da função que carrega esses inputs,
+      // depois que eles forem inseridos no DOM.
+      // Ex:
+      // function mostrarDadosEditUSer() {
+      //   // ... seu código que cria os inputs dinamicamente ...
+      //   $('#inputTelefones').mask('(00) 00000-0000');
+      //   $('#inputTelefones1').mask('(00) 00000-0000');
+      //   $('#inputCpf').mask('000.000.000-00', {reverse: true});
+      //   $('#inputDataAdmissao').mask('00/00/0000');
+      //   $('#inputDataAvisoPrevio').mask('00/00/0000 - 00/00/0000');
+      // }
+      // Para este HTML, as máscaras acima são suficientes, pois os campos já estão no HTML.
+    });
+
+
+    // Funções JavaScript gerais (podem estar fora de $(document).ready() se não dependerem do DOM pronto para serem definidas)
     function validarLogin() {
       $.ajax({
         type: "GET",
@@ -299,11 +345,13 @@
         },
         error: function(xhr, status, error) {
           console.error("Erro ao verificar login:", error);
-          console.log('Erro ao atualizar o tipo de usuário');
+          console.log('Erro ao atualizar o tipo de usuário ou verificar login');
+          // Opcional: redirecionar para login se a sessão expirou
+          // window.location.href = "http://localhost/nina/admin/login.html";
         }
       });
     }
-    validarLogin();
+    validarLogin(); // Chama a função na inicialização
 
     function sair() {
       $.ajax({
@@ -362,13 +410,12 @@
           processData: false,
           success: function(retorno) {
             console.log(retorno);
-            // Clear previous content to avoid duplicates on re-render
-            document.getElementById("mostraUser").innerHTML = '';
-            for (var i = 0; i < retorno.length; i++) {
-              var primeiro_nome = retorno[i].nome;
-              // var telefone = retorno[i].telefone; // Not used here
-              // var email = retorno[i].email; // Not used here
+            document.getElementById("mostraUser").innerHTML = ''; // Limpa conteúdo anterior
+            if (retorno && retorno.length > 0) {
+              var primeiro_nome = retorno[0].nome; // Pega o primeiro nome retornado
               document.getElementById("mostraUser").innerHTML += '<input type="text" class="form-control" disabled="" placeholder="Company" value="' + primeiro_nome + '"><input type="hidden" value="' + idUser + '" name="idRepresentante" />';
+            } else {
+              document.getElementById("mostraUser").innerHTML += '<input type="text" class="form-control" disabled="" value="Usuário Não Encontrado"><input type="hidden" value="" name="idRepresentante" />';
             }
           },
           error: function(xhr, status, error) {
@@ -376,9 +423,11 @@
             console.error(xhr.responseText);
           }
         });
+      } else {
+        document.getElementById("mostraUser").innerHTML += '<input type="text" class="form-control" disabled="" value="ID de Usuário Ausente"><input type="hidden" value="" name="idRepresentante" />';
       }
     }
-    mostrarNomeRepresentante();
+    mostrarNomeRepresentante(); // Chama a função na inicialização
 
     // Lista o menu de acordo com o LOGIN DO USUARIO
     function motrarMenu() {
@@ -397,21 +446,22 @@
       if (idUser) {
         $.ajax({
           type: "GET",
-          url: "http://localhost/lerin/php/listaUser.php?idUser=" + idUser,
+          url: "http://localhost/lerin/php/listaUser.php?idUser=" + idUser, // Verifique se "lerin" é o caminho correto para o PHP
           contentType: false,
           cache: false,
           dataType: "json",
           processData: false,
           success: function(retorno) {
-            // Clear previous content
-            document.getElementById("listarMenu").innerHTML = '';
-            for (var i = 0; i < retorno.length; i++) {
-              let tipo = retorno[i].tipo;
+            document.getElementById("listarMenu").innerHTML = ''; // Limpa conteúdo anterior
+            if (retorno && retorno.length > 0) {
+              let tipo = retorno[0].tipo; // Assume que o tipo está no primeiro resultado
               if (tipo == 0) { // Assuming 0 is admin type
                 document.getElementById("listarMenu").innerHTML += '<li><a href="./criar_user.html?idUser=' + idUser + '" ><i class="nc-icon nc-circle-10"></i><p>Usuários</p></a></li><li class="active"><a href="./tabela_geral.html?idUser=' + idUser + '"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./dashboard.html?idUser=' + idUser + '"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>';
               } else {
                 document.getElementById("listarMenu").innerHTML += '<li class="active"><a href="./tabela_geral.html?idUser=' + idUser + '"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./dashboard.html?idUser=' + idUser + '"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>';
               }
+            } else {
+              console.warn("Nenhum usuário encontrado para carregar o menu.");
             }
           },
           error: function(xhr, status, error) {
@@ -421,7 +471,7 @@
         });
       }
     }
-    motrarMenu();
+    motrarMenu(); // Chama a função na inicialização
 
     // Lista nome de usuário LOGADO no menu
     function dadosUser() {
@@ -440,17 +490,18 @@
       if (idUser) {
         $.ajax({
           type: "GET",
-          url: "http://localhost/lerin/php/listaUser.php?idUser=" + idUser,
+          url: "http://localhost/lerin/php/listaUser.php?idUser=" + idUser, // Verifique se "lerin" é o caminho correto para o PHP
           contentType: false,
           cache: false,
           dataType: "json",
           processData: false,
           success: function(retorno) {
-            // Clear previous content
-            document.getElementById("listaNomeUser").innerHTML = '';
-            for (var i = 0; i < retorno.length; i++) {
-              var primeiro_nome = retorno[i].nome;
+            document.getElementById("listaNomeUser").innerHTML = ''; // Limpa conteúdo anterior
+            if (retorno && retorno.length > 0) {
+              var primeiro_nome = retorno[0].nome;
               document.getElementById("listaNomeUser").innerHTML += primeiro_nome;
+            } else {
+              document.getElementById("listaNomeUser").innerHTML += "Usuário Desconhecido";
             }
           },
           error: function(xhr, status, error) {
@@ -460,22 +511,47 @@
         });
       }
     }
-    dadosUser();
+    dadosUser(); // Chama a função na inicialização
 
-    // Mascara de telefone para o form
-    const telefoneInput = document.getElementById("telefone");
-    if (telefoneInput) { // Check if element exists before adding listener
-      telefoneInput.addEventListener("input", function(e) {
-        let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não é número
+    // Este listener de input é redundante se você estiver usando jQuery Mask.
+    // O jQuery Mask já cuida da formatação. Mantenha apenas se tiver um motivo específico.
+    // const telefoneInput = document.getElementById("telefone");
+    // if (telefoneInput) { // Check if element exists before adding listener
+    //   telefoneInput.addEventListener("input", function(e) {
+    //     let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não é número
+    //     if (value.length > 10) {
+    //       value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+    //     } else {
+    //       value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    //     }
+    //     e.target.value = value;
+    //   });
+    // }
 
-        if (value.length > 10) {
-          value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
-        } else {
-          value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
-        }
-        e.target.value = value;
-      });
+    // Lógica de controle de inatividade
+    const MAX_IDLE_TIME = 15 * 60 * 1000; // 15 minutos em milissegundos
+    function checkIdleTime() {
+      const lastActivity = sessionStorage.getItem('lastActivity');
+      const now = Date.now();
+
+      if (lastActivity && (now - lastActivity > MAX_IDLE_TIME)) {
+        alert("Sessão expirada por inatividade. Você será redirecionado para o login.");
+        sessionStorage.clear();
+        window.location.href = "http://localhost/nina/admin/login.html";
+      } else {
+        sessionStorage.setItem('lastActivity', now); // Atualiza a cada verificação
+      }
     }
+
+    // Verifica a cada 1 minuto
+    setInterval(checkIdleTime, 60 * 1000);
+
+    // Também atualiza a cada ação do usuário
+    ['click', 'mousemove', 'keypress', 'scroll'].forEach(evt =>
+      document.addEventListener(evt, () =>
+        sessionStorage.setItem('lastActivity', Date.now())
+      )
+    );
   </script>
 
 </body>

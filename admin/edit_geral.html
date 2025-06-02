@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,17 +10,29 @@
     NINA - Usuários
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
   <style>
-    
+    /* Estilos existentes */
+    .table-responsive {
+      overflow: hidden;
+    }
+
+    .sidebar-wrapper {
+      overflow: hidden;
+    }
+
+    /* Adicione alguns estilos para garantir que o datepicker se sobreponha a outros elementos */
+    .datepicker {
+      z-index: 1050 !important;
+      /* Ajuste conforme necessário para o seu layout */
+    }
   </style>
 </head>
 
@@ -29,22 +40,17 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-        <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="javascript:void(0);" class="simple-text logo-mini">
           <div class="logo-image-small">
             <img src="../assets/img/logo-small.png">
           </div>
-          <!-- <p>CT</p> -->
         </a>
-        <a href="https://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="javascript:void(0);" class="simple-text logo-normal">
           <div id="listaNomeUser"></div>
-          <!-- <div class="logo-image-big">
-            <img src="../assets/img/logo-big.png">
-          </div> -->
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav" id="listarMenu">
-         
           <li class="active-pro">
             <a href="./upgrade.html">
               <i class="nc-icon nc-spaceship"></i>
@@ -55,7 +61,6 @@
       </div>
     </div>
     <div class="main-panel">
-      <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
         <div class="container-fluid">
           <div class="navbar-wrapper">
@@ -68,18 +73,14 @@
             </div>
             <a class="navbar-brand" href="javascript:;">Edição Tabela Geral</a>
             <button class="btn btn-primary btn-round" onclick="verListagemClientes()" id="BtnListagem" style="display: none;">Listagem</button>
-            
-            
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
-         
         </div>
       </nav>
-      <!-- End Navbar -->
       <div class="content">
         <div class="row" id="form_cliente" style="display:block;">
           <div class="col-md-8">
@@ -92,8 +93,6 @@
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <!--label>Representante</label-->
-                        
                         <div id="mostraUser"></div>
                         <div id="idUserEdit"></div>
                       </div>
@@ -101,124 +100,106 @@
                   </div>
                   <div class="row">
                     <div class="col-md-8 pr-1">
-                        
-                        <div class="form-group">
-                          <label>Funcionário</label>
-                          <div id="funcionrio"></div>
-                          
-                        </div>
-                        <div class="form-group">
-                            <label>Vínculo</label>
-                            <div id="vnculo"></div>
-                            
+                      <div class="form-group">
+                        <label>Funcionário</label>
+                        <div id="funcionrio"></div>
+                      </div>
+                      <div class="form-group">
+                        <label>Vínculo</label>
+                        <div id="vnculo"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Cargo</label>
+                        <div id="cargo"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Equipamento</label>
+                        <div id="equipamento"></div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Matrícula</label>
+                        <div id="matrcula"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Telefones</label>
+                        <div id="telefones"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Data Admissão</label>
+                        <div id="data_admisso_container">
                           </div>
                       </div>
-                      <div class="col-md-8 pr-1">
-                          <div class="form-group">
-                            <label>Cargo</label>
-                            <div id="cargo"></div>
-                            
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Turno</label>
+                        <div id="turno"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Endereço Bairro</label>
+                        <div id="endereo_bairro"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Data Início e Fim Aviso Prévio</label>
+                        <div id="data_aviso_previo_container">
                           </div>
                       </div>
-                      <div class="col-md-8 pr-1">
-                          <div class="form-group">
-                            <label>Equipamento</label>
-                            <div id="equipamento"></div>
-                            
-                          </div>
+                    </div>
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Email</label>
+                        <div id="email"></div>
                       </div>
-                    
-                      <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>Matrícula</label>
-                          <div id="matrcula"></div>
-                          
-                        </div>
                     </div>
                     <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>Telefones</label>
-                          <div id="telefones"></div>
-                          
-                        </div>
+                      <div class="form-group">
+                        <label>CPF</label>
+                        <div id="cpf"></div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-8 pr-1">
+                      <div class="form-group">
+                        <label>Telefones1</label>
+                        <div id="telefones1"></div>
+                      </div>
                     </div>
                     <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>data_admisso</label>
-                          <div id="data_admisso"></div>
-                          
-                        </div>
+                      <div class="form-group">
+                        <label>OBS</label>
+                        <div id="obs"></div>
+                      </div>
                     </div>
-                      <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>Turno</label>
-                          <div id="turno"></div>
-                          
-                        </div>
-                    </div>
-                    <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>Endereo Bairro</label>
-                          <div id="endereo_bairro"></div>
-                          
-                        </div>
-                    </div>
-                    <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>data_incio_e_fim_aviso_prévio</label>
-                          <div id="data_incio_e_fim_aviso_prvio"></div>
-                          
-                        </div>
-                    </div>
-                    <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>Email</label>
-                          <div id="email"></div>
-                          
-                        </div>
-                    </div>
-                     <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>CPF</label>
-                          <div id="cpf"></div>
-                          
-                        </div>
-                    </div>
-                    
-                     <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>Telefones1</label>
-                          <div id="telefones1"></div>
-                          
-                        </div>
-                    </div>
-                    <div class="col-md-8 pr-1">
-                        <div class="form-group">
-                          <label>OBS</label>
-                          <div id="obs"></div>
-                          
-                        </div>
-                    </div>
-                    
+
                     <div class="col-12">
                       <div class="d-flex justify-content-start gap-2">
-                        <!-- Botão de Voltar -->
                         <div id="btn_voltarEditUser"></div>
 
-                        <!-- Botão de Atualizar -->
-                        <input type="submit" class="btn btn-primary" value="Atualizar"/>
+                        <input type="submit" class="btn btn-primary" value="Atualizar" />
                       </div>
                     </div>
-                    
-                   
                   </div>
-                  
                 </form>
               </div>
             </div>
           </div>
         </div>
-        
+
       </div>
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
@@ -242,282 +223,315 @@
       </footer>
     </div>
   </div>
-  <script src="../assets/js/jquery-2.2.3.min.js"></script>
-  <script src="../assets/js/form-ajax.js"></script>
- 
-  
-  <!--   Core JS Files   -->
+
   <script src="../assets/js/core/jquery.min.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chart JS -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script> <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
   <script src="../assets/demo/demo.js"></script>
+
+  <script src="../assets/js/form-ajax.js"></script>
+  <script src="../assets/js/listaGeral.js"></script>
+  <script src="../assets/js/validarUser.js"></script>
+
   <script>
-    function validarLogin(){
-      $.ajax({
-      type: "GET",
-      url: "http://localhost/nina/php/verificarUser.php",
-      dataType: "json",
-      cache: false,
-      success: function(retorno) {
-        console.log("User logado!");
-        
-      },
-      error: function(xhr, status, error) {
-        console.error("Erro ao atualizar:", error);
-        console.log('Erro ao atualizar o tipo de usuário');
-        // alert(xhr.responseText); // pode ativar se quiser ver o erro completo
-      }
+    // O código dentro de $(document).ready() será executado assim que o DOM estiver pronto.
+    $(document).ready(function() {
+      validarLogin();
+      mostrarBtnEditUser();
+      // Chame mostrarDadosEditUSer() aqui. As máscaras e datepickers serão aplicados
+      // DENTRO dessa função, após os elementos serem criados via AJAX.
+      mostrarDadosEditUSer();
+      mostrarNomeRepresentante();
+      motrarMenu();
+      dadosUser();
     });
-  } 
-  validarLogin()
-    function mostrarBtnEditUser(){
+
+    function validarLogin() {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost/nina/php/verificarUser.php",
+        dataType: "json",
+        cache: false,
+        success: function(retorno) {
+          console.log("User logado!");
+
+        },
+        error: function(xhr, status, error) {
+          console.error("Erro ao verificar login:", error);
+          console.log('Erro ao atualizar o tipo de usuário ou verificar login');
+        }
+      });
+    }
+
+    function sair() {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost/nina/php/logout.php",
+        dataType: "json",
+        success: function(retorno) {
+          console.log("Sucesso:", retorno);
+          window.location.href = "http://localhost/nina/admin/login.html";
+        },
+        error: function(xhr, status, error) {
+          console.log("Erro AJAX (logout):");
+          console.log("Status:", status);
+          console.log("Erro:", error);
+          console.log("Response:", xhr.responseText);
+          alert('Erro no AJAX. Veja o console.');
+        }
+      });
+    }
+
+    function verformCliente() {
+      document.getElementById("form_cliente").style.display = "block";
+      document.getElementById("listagem_cliente").style.display = "none";
+      document.getElementById("BtnNovo").style.display = "none";
+      document.getElementById("BtnListagem").style.display = "block";
+    }
+
+    function verListagemClientes() {
+      document.getElementById("listagem_cliente").style.display = "block";
+      document.getElementById("form_cliente").style.display = "none";
+      document.getElementById("BtnNovo").style.display = "block";
+      document.getElementById("BtnListagem").style.display = "none";
+    }
+
+    function mostrarBtnEditUser() {
       var query = location.search.slice(1);
       var partes = query.split('&');
       var datas = {};
-      partes.forEach(function (parte) {
+      partes.forEach(function(parte) {
         var chaveValor = parte.split('=');
         var chave = chaveValor[0];
         var valor = chaveValor[1];
         datas[chave] = valor;
       });
 
-      var idUser        = datas.idUser
-      document.getElementById('btn_voltarEditUser').innerHTML = '<a href="criar_user.html?idUser='+idUser+'" class="btn btn-primary" id="btn_voltarEditUser">Voltar</a>'
+      var idUser = datas.idUser
+      document.getElementById('btn_voltarEditUser').innerHTML = '<a href="criar_user.html?idUser=' + idUser + '" class="btn btn-primary">Voltar</a>'
     }
-    mostrarBtnEditUser()
 
     function mudarTipoUser(idUserApagar, tipo) {
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/nina/php/mudarTipoUser.php?idUserApagar=" + encodeURIComponent(idUserApagar) + '&tipo=' + encodeURIComponent(tipo),
-      dataType: "json",
-      cache: false,
-      success: function(retorno) {
-        console.log("Retorno do servidor:", retorno);
-        alert("Atualizado com sucesso!");
-        window.location.reload();
-      },
-      error: function(xhr, status, error) {
-        console.error("Erro ao atualizar:", error);
-        alert('Erro ao atualizar o tipo de usuário');
-        // alert(xhr.responseText); // pode ativar se quiser ver o erro completo
-      }
-    });
-  }
-
-
-    function desativarUser(idUserApagar, status){
       $.ajax({
         type: "GET",
-        url: "http://localhost/nina/php/apagarUser.php?idUserApagar=" + idUserApagar+'&status='+status,
+        url: "http://localhost/nina/php/mudarTipoUser.php?idUserApagar=" + encodeURIComponent(idUserApagar) + '&tipo=' + encodeURIComponent(tipo),
         dataType: "json",
         cache: false,
-        success: function(retorno){
+        success: function(retorno) {
+          console.log("Retorno do servidor:", retorno);
+          alert("Atualizado com sucesso!");
+          window.location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error("Erro ao atualizar:", error);
+          alert('Erro ao atualizar o tipo de usuário');
+        }
+      });
+    }
+
+    function desativarUser(idUserApagar, status) {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost/nina/php/apagarUser.php?idUserApagar=" + idUserApagar + '&status=' + status,
+        dataType: "json",
+        cache: false,
+        success: function(retorno) {
           console.log("Retorno do servidor:", retorno);
           alert("Usuário atualizado com sucesso!");
           window.location.reload()
-
         },
         error: function(xhr, status, error) {
           console.error("Erro ao excluir:", error);
           alert('Erro ao atualizar usuário');
-          //alert(xhr.responseText);
         }
       });
     }
- 
-    function mostrarDadosEditUSer()
-    {
+
+    function mostrarDadosEditUSer() {
       var query = location.search.slice(1);
       var partes = query.split('&');
       var datas = {};
-      partes.forEach(function (parte) {
+      partes.forEach(function(parte) {
         var chaveValor = parte.split('=');
         var chave = chaveValor[0];
         var valor = chaveValor[1];
         datas[chave] = valor;
       });
 
-      var idUser        = datas.idUser
-      var funcionrio    = datas.funcionrio
+      var idUser = datas.idUser
+      var funcionrioId = datas.funcionrio // Renomeado para evitar conflito com a variável de retorno
 
-     $.ajax({
-          type: "GET",
-          url: "http://localhost/nina/php/listaEditGeral.php?idUser=" + idUser + "&funcionrio=" + funcionrio,
-          contentType: false, // Provavelmente desnecessário para GET, veja observação abaixo
-          cache: false,
-          dataType: "json",
-          data: datas, // Cuidado aqui: veja a observação sobre `data` e `processData`
-          processData: false, // Cuidado aqui: veja a observação sobre `data` e `processData`
-          success: function(retorno) {
-              console.log(retorno);
-              for (var i = 0; i < retorno.length; i++) {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost/nina/php/listaEditGeral.php?idUser=" + idUser + "&funcionrio=" + funcionrioId,
+        dataType: "json",
+        cache: false,
+        success: function(retorno) {
+          console.log(retorno);
+          if (retorno && retorno.length > 0) {
+            let data = retorno[0]; // Pega o primeiro objeto de dados
 
-                  let funcionrio = retorno[i].funcionrio;
-                  let vnculo = retorno[i].vnculo;
-                  let cargo = retorno[i].cargo;
-                  let equipamento = retorno[i].equipamento;
-                  let matrcula = retorno[i].matrcula;
-                  let telefones = retorno[i].telefones;
-                  let data_admisso = retorno[i].data_admisso;
-                  let turno = retorno[i].turno;
-                  let endereo_bairro = retorno[i].endereo_bairro;
-                  let data_incio_e_fim_aviso_prvio = retorno[i].data_incio_e_fim_aviso_prvio;
-                  let email = retorno[i].email;
-                  let cpf = retorno[i].cpf;
-                  let telefones1 = retorno[i].telefones1;
-                  let obs = retorno[i].obs;
+            // --- Validação dos campos para 'null', undefined ou strings vazias ---
+            // Usando 'Não Informado' como padrão. "Sem Registro" é uma boa opção para matrícula.
+            const formatValue = (value, defaultValue = 'Não Informado') => (value == null || value === 'null' || value === '') ? defaultValue : value;
 
-                  // --- Validação dos campos para 'null', undefined ou strings vazias ---
-                  // Usando 'Não Informado' como padrão. "Sem Registro" é uma boa opção para matrícula.
+            let funcionrio = formatValue(data.funcionrio);
+            let vnculo = formatValue(data.vnculo);
+            let cargo = formatValue(data.cargo);
+            let equipamento = formatValue(data.equipamento);
+            let matrcula = formatValue(data.matrcula, 'Sem Registro');
+            let telefones = formatValue(data.telefones);
+            let data_admisso = formatValue(data.data_admisso);
+            let turno = formatValue(data.turno);
+            let endereo_bairro = formatValue(data.endereo_bairro);
+            let data_incio_e_fim_aviso_prvio = formatValue(data.data_incio_e_fim_aviso_prvio);
+            let email = formatValue(data.email);
+            let cpf = formatValue(data.cpf);
+            let telefones1 = formatValue(data.telefones1);
+            let obs = formatValue(data.obs);
 
-                  funcionrio = funcionrio == null || funcionrio === 'null' || funcionrio === '' ? 'Não Informado' : funcionrio;
-                  vnculo = vnculo == null || vnculo === 'null' || vnculo === '' ? 'Não Informado' : vnculo;
-                  cargo = cargo == null || cargo === 'null' || cargo === '' ? 'Não Informado' : cargo;
-                  equipamento = equipamento == null || equipamento === 'null' || equipamento === '' ? 'Não Informado' : equipamento;
-                  matrcula = matrcula == null || matrcula === 'null' || matrcula === '' ? 'Sem Registro' : matrcula; // Específico para matrícula
-                  telefones = telefones == null || telefones === 'null' || telefones === '' ? 'Não Informado' : telefones;
-                  data_admisso = data_admisso == null || data_admisso === 'null' || data_admisso === '' ? 'Não Informado' : data_admisso;
-                  turno = turno == null || turno === 'null' || turno === '' ? 'Não Informado' : turno;
-                  endereo_bairro = endereo_bairro == null || endereo_bairro === 'null' || endereo_bairro === '' ? 'Não Informado' : endereo_bairro;
-                  data_incio_e_fim_aviso_prvio = data_incio_e_fim_aviso_prvio == null || data_incio_e_fim_aviso_prvio === 'null' || data_incio_e_fim_aviso_prvio === '' ? 'Não Informado' : data_incio_e_fim_aviso_prvio;
-                  email = email == null || email === 'null' || email === '' ? 'Não Informado' : email;
-                  cpf = cpf == null || cpf === 'null' || cpf === '' ? 'Não Informado' : cpf;
-                  telefones1 = telefones1 == null || telefones1 === 'null' || telefones1 === '' ? 'Não Informado' : telefones1;
-                  obs = obs == null || obs === 'null' || obs === '' ? 'Não Informado' : obs;
+            // --- Preenchimento dos elementos HTML e criação de inputs ---
+            // Os inputs são gerados dinamicamente aqui.
+            // É importante dar IDs ÚNICOS para os campos de data, como `inputDataAdmissao` e `inputDataAvisoPrevio`.
+            document.getElementById('funcionrio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do funcionário" name="funcionrio" value="' + funcionrio + '">';
+            document.getElementById('vnculo').innerHTML = '<input type="text" class="form-control" placeholder="Vínculo" name="vnculo" value="' + vnculo + '">';
+            document.getElementById('cargo').innerHTML = '<input type="text" class="form-control" placeholder="Cargo" name="cargo" value="' + cargo + '">';
+            document.getElementById('equipamento').innerHTML = '<input type="text" class="form-control" placeholder="Equipamento" name="equipamento" value="' + equipamento + '">';
+            document.getElementById('matrcula').innerHTML = '<input type="text" class="form-control" placeholder="Matrícula" name="matrcula" value="' + matrcula + '">';
+            document.getElementById('telefones').innerHTML = '<input type="tel" class="form-control" placeholder="(99) 99999-9999" name="telefones" value="' + telefones + '" id="inputTelefones">';
+            document.getElementById('data_admisso_container').innerHTML = '<input type="text" class="form-control" placeholder="DD/MM/AAAA" name="data_admisso" value="' + data_admisso + '" id="inputDataAdmissao">';
+            document.getElementById('turno').innerHTML = '<input type="text" class="form-control" placeholder="Turno" name="turno" value="' + turno + '">';
+            document.getElementById('endereo_bairro').innerHTML = '<input type="text" class="form-control" placeholder="Bairro" name="endereo_bairro" value="' + endereo_bairro + '">';
+            document.getElementById('data_aviso_previo_container').innerHTML = '<input type="text" class="form-control" placeholder="DD/MM/AAAA - DD/MM/AAAA" name="data_incio_e_fim_aviso_prvio" value="' + data_incio_e_fim_aviso_prvio + '" id="inputDataAvisoPrevio">';
+            document.getElementById('email').innerHTML = '<input type="email" class="form-control" placeholder="E-mail" name="email" value="' + email + '">';
+            document.getElementById('cpf').innerHTML = '<input type="text" class="form-control" placeholder="XXX.XXX.XXX-XX" name="cpf" value="' + cpf + '" id="inputCpf">';
+            document.getElementById('telefones1').innerHTML = '<input type="tel" class="form-control" placeholder="(99) 99999-9999" name="telefones1" value="' + telefones1 + '" id="inputTelefones1">';
+            document.getElementById('obs').innerHTML = '<input type="text" class="form-control" placeholder="Observações" name="obs" value="' + obs + '">';
 
 
-                  // --- Preenchimento dos elementos HTML (sem mudanças aqui, pois as variáveis já foram ajustadas) ---
-                  document.getElementById('funcionrio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="funcionrio" value="' + funcionrio + '">';
-                  document.getElementById('vnculo').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="vnculo" value="' + vnculo + '">';
-                  document.getElementById('cargo').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cargo" value="' + cargo + '">';
-                  document.getElementById('matrcula').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="matrcula" value="' + matrcula + '">';
-                  document.getElementById('telefones').innerHTML = '<input type="tel" class="form-control" placeholder="" name="telefones" value="' + telefones + '" id="telefone">';
-                  document.getElementById('data_admisso').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_admisso" value="' + data_admisso + '">';
-                  document.getElementById('turno').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="turno" value="' + turno + '">';
-                  document.getElementById('endereo_bairro').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="endereo_bairro" value="' + endereo_bairro + '">';
-                  document.getElementById('data_incio_e_fim_aviso_prvio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="data_incio_e_fim_aviso_prvio" value="' + data_incio_e_fim_aviso_prvio + '">';
-                  document.getElementById('email').innerHTML = '<input type="email" class="form-control" placeholder="" name="email" value="' + email + '">';
-                  document.getElementById('cpf').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="cpf" value="' + cpf + '">';
-                  document.getElementById('telefones1').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="telefones1" value="' + telefones1 + '">';
-                  document.getElementById('obs').innerHTML = '<input type="text" class="form-control" placeholder="Nome do cliente" name="obs" value="' + obs + '">';
+            // --- Aplicar máscaras e datepickers APÓS os inputs serem inseridos no DOM ---
+            // Máscaras de telefone e CPF
+            $('#inputTelefones').mask('(00) 00000-0000');
+            $('#inputTelefones1').mask('(00) 00000-0000');
+            $('#inputCpf').mask('000.000.000-00', {
+              reverse: true
+            });
 
-              }
+            // Inicializar Datepicker para "Data Admissão" (uma única data)
+            $('#inputDataAdmissao').datepicker({
+              format: 'dd/mm/yyyy',
+              language: 'pt-BR',
+              autoclose: true,
+              todayHighlight: true
+            });
 
-          },
-          error: function(xhr, status, error) {
-              alert('Erro ao carregar os dados de edição.'); // Mensagem mais descritiva
-              console.error(xhr.responseText); // Use console.error para erros
+            // Máscara para "Data Início e Fim Aviso Prévio" (intervalo de datas como texto)
+            // Mantemos a máscara de texto aqui, pois o datepicker padrão não é para intervalos.
+            $('#inputDataAvisoPrevio').mask('00/00/0000 - 00/00/0000');
+
+          } else {
+            console.warn("Nenhum dado encontrado para edição.");
+            // Limpa os campos ou mostra uma mensagem de erro
+            document.getElementById('form_cliente').innerHTML = '<div class="alert alert-warning">Nenhum dado encontrado para este funcionário.</div>';
           }
-      });
-
-    }
-    mostrarDadosEditUSer()
-
-        function mostrarNomeRepresentante()
-        {
-          var query = location.search.slice(1);
-          var partes = query.split('&');
-          var datas = {};
-          partes.forEach(function (parte) {
-            var chaveValor = parte.split('=');
-            var chave = chaveValor[0];
-            var valor = chaveValor[1];
-            datas[chave] = valor;
-          });
-    
-          var idUser = datas.idUser
-          var idUserLista = datas.idUserLista
-    
-          $.ajax({
-              type: "GET",
-              url: "http://localhost/nina/php/listaUser.php?idUser="+idUser,
-              contentType: false,
-              cache: false,
-              dataType: "json",
-              data: datas,
-              processData:false,
-              success: function(retorno){
-                  console.log(retorno);
-                  for(var i = 0; i<retorno.length; i++){
-
-                      var primeiro_nome = retorno[i].nome; 
-                      var telefone    = retorno[i].telefone;
-                      var email       = retorno[i].email;
-                      
-                      document.getElementById("mostraUser").innerHTML += ' <label>Responsável: </label><input type="text" class="form-control" disabled="" placeholder="Company" value="'+primeiro_nome+'"><input type="hidden" value="'+idUserLista+'" name="idUserEdit" />';
-                  }
-                
-              },
-                error: function(xhr, status, error) {
-                alert('erro')
-                alert(xhr.responseText);
-              }
-            }); 
-    
+        },
+        error: function(xhr, status, error) {
+          alert('Erro ao carregar os dados de edição.');
+          console.error(xhr.responseText);
         }
-        mostrarNomeRepresentante()
-     
-    function motrarMenu()
-    {
+      });
+    }
+
+
+    function mostrarNomeRepresentante() {
       var query = location.search.slice(1);
       var partes = query.split('&');
       var datas = {};
-      partes.forEach(function (parte) {
+      partes.forEach(function(parte) {
         var chaveValor = parte.split('=');
         var chave = chaveValor[0];
         var valor = chaveValor[1];
         datas[chave] = valor;
       });
-  
+
+      var idUser = datas.idUser
+      var idUserLista = datas.idUserLista // Este parece ser o ID do usuário que está sendo editado, não do representante logado
+
+      $.ajax({
+        type: "GET",
+        url: "http://localhost/nina/php/listaUser.php?idUser=" + idUser, // Assume que idUser é o ID do representante logado
+        dataType: "json",
+        cache: false,
+        success: function(retorno) {
+          console.log("Dados do Representante:", retorno); // Log mais específico
+          document.getElementById("mostraUser").innerHTML = ''; // Limpa conteúdo anterior
+          if (retorno && retorno.length > 0) {
+            var primeiro_nome = retorno[0].nome;
+            document.getElementById("mostraUser").innerHTML += ' <label>Responsável: </label><input type="text" class="form-control" disabled="" placeholder="Company" value="' + primeiro_nome + '"><input type="hidden" value="' + idUserLista + '" name="idUserEdit" />';
+          } else {
+            document.getElementById("mostraUser").innerHTML += ' <label>Responsável: </label><input type="text" class="form-control" disabled="" value="Não Informado"><input type="hidden" value="" name="idUserEdit" />';
+          }
+        },
+        error: function(xhr, status, error) {
+          alert('Erro ao carregar representante');
+          console.error("Erro AJAX (mostrarNomeRepresentante):", xhr.responseText); // Log mais específico
+        }
+      });
+    }
+
+
+    function motrarMenu() {
+      var query = location.search.slice(1);
+      var partes = query.split('&');
+      var datas = {};
+      partes.forEach(function(parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        datas[chave] = valor;
+      });
+
       var idUser = datas.idUser
       $.ajax({
-          type: "GET",
-          url: "http://localhost/lerin/php/listaUser.php?idUser="+idUser,
-          contentType: false,
-          cache: false,
-          dataType: "json",
-          data: datas,
-          processData:false,
-          success: function(retorno){
-              for(var i = 0; i<retorno.length; i++){
-                  let tipo      = retorno[i].tipo  
-                  
-                  if(tipo == 0)
-                  {
-                    document.getElementById("listarMenu").innerHTML += '<li><a href="./criar_user.html?idUser='+idUser+'"><i class="nc-icon nc-circle-10"></i><p>Usuários</p></a></li><li class="active"><a href="./tabela_geral.html?idUser='+idUser+'"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./dashboard.html?idUser='+idUser+'"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>'
-                  }
-                  else{
-                    document.getElementById("listarMenu").innerHTML += '<li class="active"><a href="./tabela_geral.html?idUser='+idUser+'"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./dashboard.html?idUser='+idUser+'"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>'
-                  }
-                }
-          },
-            error: function(xhr, status, error) {
-            alert('erro')
-            alert(xhr.responseText);
+        type: "GET",
+        url: "http://localhost/lerin/php/listaUser.php?idUser=" + idUser, // **VERIFIQUE ESTE CAMINHO**
+        dataType: "json",
+        cache: false,
+        success: function(retorno) {
+          document.getElementById("listarMenu").innerHTML = ''; // Limpa conteúdo anterior
+          if (retorno && retorno.length > 0) {
+            let tipo = retorno[0].tipo
+            if (tipo == 0) { // Assuming 0 is admin type
+              document.getElementById("listarMenu").innerHTML += '<li><a href="./criar_user.html?idUser=' + idUser + '"><i class="nc-icon nc-circle-10"></i><p>Usuários</p></a></li><li class="active"><a href="./tabela_geral.html?idUser=' + idUser + '"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./dashboard.html?idUser=' + idUser + '"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>'
+            } else {
+              document.getElementById("listarMenu").innerHTML += '<li class="active"><a href="./tabela_geral.html?idUser=' + idUser + '"><i class="nc-icon nc-single-02"></i><p>Geral</p></a></li><li><a href="./dashboard.html?idUser=' + idUser + '"><i class="nc-icon nc-single-copy-04"></i><p>Gráficos</p></a></li>'
+            }
           }
-         
-        }); 
-      }
-    
-    
-    motrarMenu()
- 
-    function dadosUser()
-    {
+        },
+        error: function(xhr, status, error) {
+          alert('Erro ao carregar menu');
+          console.error("Erro AJAX (motrarMenu):", xhr.responseText); // Log mais específico
+        }
+      });
+    }
+
+
+    function dadosUser() {
       var query = location.search.slice(1);
       var partes = query.split('&');
       var datas = {};
-      partes.forEach(function (parte) {
+      partes.forEach(function(parte) {
         var chaveValor = parte.split('=');
         var chave = chaveValor[0];
         var valor = chaveValor[1];
@@ -527,37 +541,32 @@
       var idUser = datas.idUser
 
       $.ajax({
-          type: "GET",
-          url: "http://localhost/lerin/php/listaUser.php?idUser="+idUser,
-          contentType: false,
-          cache: false,
-          dataType: "json",
-          data: datas,
-          processData:false,
-          success: function(retorno){
-              for(var i = 0; i<retorno.length; i++){
-                  var primeiro_nome      = retorno[i].nome  
-                  
-                  
-                  document.getElementById("listaNomeUser").innerHTML += primeiro_nome;
-              }
-            
-          },
-            error: function(xhr, status, error) {
-            alert('erro')
-            alert(xhr.responseText);
+        type: "GET",
+        url: "http://localhost/lerin/php/listaUser.php?idUser=" + idUser, // **VERIFIQUE ESTE CAMINHO**
+        dataType: "json",
+        cache: false,
+        success: function(retorno) {
+          document.getElementById("listaNomeUser").innerHTML = ''; // Limpa conteúdo anterior
+          if (retorno && retorno.length > 0) {
+            var primeiro_nome = retorno[0].nome
+            document.getElementById("listaNomeUser").innerHTML += primeiro_nome;
+          } else {
+            document.getElementById("listaNomeUser").innerHTML += "Usuário Desconhecido";
           }
-        }); 
-      }
-      dadosUser()
+        },
+        error: function(xhr, status, error) {
+          alert('Erro ao carregar dados do usuário');
+          console.error("Erro AJAX (dadosUser):", xhr.responseText); // Log mais específico
+        }
+      });
+    }
 
-    
     const MAX_IDLE_TIME = 15 * 60 * 1000; // 15 minutos em milissegundos
-  
+
     function checkIdleTime() {
       const lastActivity = sessionStorage.getItem('lastActivity');
       const now = Date.now();
-  
+
       if (lastActivity && (now - lastActivity > MAX_IDLE_TIME)) {
         alert("Sessão expirada por inatividade.");
         sessionStorage.clear();
@@ -566,22 +575,18 @@
         sessionStorage.setItem('lastActivity', now); // Atualiza a cada verificação
       }
     }
-  
+
     // Verifica a cada 1 minuto
     setInterval(checkIdleTime, 60 * 1000);
-  
+
     // Também atualiza a cada ação do usuário
     ['click', 'mousemove', 'keypress', 'scroll'].forEach(evt =>
       document.addEventListener(evt, () =>
         sessionStorage.setItem('lastActivity', Date.now())
       )
     );
+  </script>
 
- 
-</script>
-
-
-   
 </body>
 
 </html>
