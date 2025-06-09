@@ -8,10 +8,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 $termoBusca = isset($_GET['termo_busca']) ? $_GET['termo_busca'] : '';
 
 // 2. Conectar ao banco de dados e obter *todos* os dados filtrados
-$servername = "localhost";
-$username = "seu_usuario";
-$password = "sua_senha";
-$dbname = "seu_banco";
+include_once('conexao.php');
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);

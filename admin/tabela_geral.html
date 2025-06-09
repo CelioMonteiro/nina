@@ -233,10 +233,16 @@
 
         <div class="col-md-12" id="listagem_cliente" style="display:block;">
           <div class="card card-plain">
-            <div class="card-header">
+           <div class="card-header">
               <h4 class="card-title"> Tabela Geral</h4>
               <p class="card-category"> Atualize seus contatos para melhores resultados</p>
-              <div id="paginacao" class="text-center mt-3"></div>
+              <div class="d-flex justify-content-between align-items-center"> <div id="paginacao" class="text-center mt-3"></div>
+                <div>
+                  <button class="btn btn-info btn-round" onclick="exportData('pdf')">Exportar PDF</button>
+                  <button class="btn btn-success btn-round" onclick="exportData('excel')">Exportar Excel</button>
+                  <button class="btn btn-warning btn-round" onclick="exportData('word')">Exportar Word</button>
+                </div>
+              </div>
             </div>
             <div class="card-body">
               <div class="table-responsive" style="position: relative;">
@@ -553,7 +559,40 @@
       )
     );
   </script>
+  <script>
+  // ... (your existing JavaScript code) ...
 
+  function exportData(format) {
+    let url = '';
+    // You might want to pass the current search term to the export scripts
+    // if your PHP export scripts are designed to filter based on it.
+    const searchTerm = document.getElementById('search').value;
+
+    switch (format) {
+      case 'pdf':
+        url = 'http://localhost/nina/php/exportar_PDF.php';
+        break;
+      case 'excel':
+        url = 'http://localhost/nina/php/exportar_ECXEL.php';
+        break;
+      case 'word':
+        url = 'http://localhost/nina/php/exportar_DOCX.php';
+        break;
+      default:
+        return; // Do nothing if format is not recognized
+    }
+
+    // If you want to pass the search term to the export script:
+    // This assumes your PHP export scripts can handle a 'termo_busca' GET parameter.
+    if (searchTerm) {
+      url += '?termo_busca=' + encodeURIComponent(searchTerm);
+    }
+
+    window.open(url, '_blank');
+  }
+
+  // ... (rest of your existing JavaScript code) ...
+</script>
 </body>
 
 </html>
