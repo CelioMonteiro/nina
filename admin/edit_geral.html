@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    NINA - Usuários
+    NINA - Tabela Geral
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
@@ -359,99 +359,111 @@
     }
 
     function mostrarDadosEditUSer() {
-      var query = location.search.slice(1);
-      var partes = query.split('&');
-      var datas = {};
-      partes.forEach(function(parte) {
-        var chaveValor = parte.split('=');
-        var chave = chaveValor[0];
-        var valor = chaveValor[1];
-        datas[chave] = valor;
-      });
+  var query = location.search.slice(1);
+  var partes = query.split('&');
+  var datas = {};
+  partes.forEach(function(parte) {
+    var chaveValor = parte.split('=');
+    var chave = chaveValor[0];
+    var valor = chaveValor[1];
+    datas[chave] = valor;
+  });
 
-      var idUser = datas.idUser
-      var funcionrioId = datas.funcionrio // Renomeado para evitar conflito com a variável de retorno
+  var idUser = datas.idUser
+  var funcionrioId = datas.funcionrio // Renomeado para evitar conflito com a variável de retorno
 
-      $.ajax({
-        type: "GET",
-        url: "http://localhost/nina/php/listaEditGeral.php?idUser=" + idUser + "&funcionrio=" + funcionrioId,
-        dataType: "json",
-        cache: false,
-        success: function(retorno) {
-          console.log(retorno);
-          if (retorno && retorno.length > 0) {
-            let data = retorno[0]; // Pega o primeiro objeto de dados
+  $.ajax({
+    type: "GET",
+    url: "http://localhost/nina/php/listaEditGeral.php?idUser=" + idUser + "&funcionrio=" + funcionrioId,
+    dataType: "json",
+    cache: false,
+    success: function(retorno) {
+      console.log(retorno);
+      if (retorno && retorno.length > 0) {
+        let data = retorno[0]; // Pega o primeiro objeto de dados
 
-            // --- Validação dos campos para 'null', undefined ou strings vazias ---
-            // Usando 'Não Informado' como padrão. "Sem Registro" é uma boa opção para matrícula.
-            const formatValue = (value, defaultValue = 'Não Informado') => (value == null || value === 'null' || value === '') ? defaultValue : value;
+        // --- Validação dos campos para 'null', undefined ou strings vazias ---
+        // Usando 'Não Informado' como padrão. "Sem Registro" é uma boa opção para matrícula.
+        const formatValue = (value, defaultValue = 'Não Informado') => (value == null || value === 'null' || value === '') ? defaultValue : value;
 
-            let funcionrio = formatValue(data.funcionrio);
-            let vnculo = formatValue(data.vnculo);
-            let cargo = formatValue(data.cargo);
-            let equipamento = formatValue(data.equipamento);
-            let matrcula = formatValue(data.matrcula, 'Sem Registro');
-            let telefones = formatValue(data.telefones);
-            let data_admisso = formatValue(data.data_admisso);
-            let turno = formatValue(data.turno);
-            let endereo_bairro = formatValue(data.endereo_bairro);
-            let data_incio_e_fim_aviso_prvio = formatValue(data.data_incio_e_fim_aviso_prvio);
-            let email = formatValue(data.email);
-            let cpf = formatValue(data.cpf);
-            let telefones1 = formatValue(data.telefones1);
-            let obs = formatValue(data.obs);
+        let funcionrio = formatValue(data.funcionrio);
+        let vnculo = formatValue(data.vnculo);
+        let cargo = formatValue(data.cargo);
+        let equipamento = formatValue(data.equipamento);
+        let matrcula = formatValue(data.matrcula, 'Sem Registro');
+        let telefones = formatValue(data.telefones);
+        let data_admisso = formatValue(data.data_admisso);
+        let turno = formatValue(data.turno);
+        let endereo_bairro = formatValue(data.endereo_bairro);
+        let data_incio_e_fim_aviso_prvio = formatValue(data.data_incio_e_fim_aviso_prvio);
+        let email = formatValue(data.email);
+        let cpf = formatValue(data.cpf);
+        let telefones1 = formatValue(data.telefones1);
+        let obs = formatValue(data.obs);
 
-            // --- Preenchimento dos elementos HTML e criação de inputs ---
-            // Os inputs são gerados dinamicamente aqui.
-            // É importante dar IDs ÚNICOS para os campos de data, como `inputDataAdmissao` e `inputDataAvisoPrevio`.
-            document.getElementById('funcionrio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do funcionário" name="funcionrio" value="' + funcionrio + '">';
-            document.getElementById('vnculo').innerHTML = '<input type="text" class="form-control" placeholder="Vínculo" name="vnculo" value="' + vnculo + '">';
-            document.getElementById('cargo').innerHTML = '<input type="text" class="form-control" placeholder="Cargo" name="cargo" value="' + cargo + '">';
-            document.getElementById('equipamento').innerHTML = '<input type="text" class="form-control" placeholder="Equipamento" name="equipamento" value="' + equipamento + '">';
-            document.getElementById('matrcula').innerHTML = '<input type="text" class="form-control" placeholder="Matrícula" name="matrcula" value="' + matrcula + '">';
-            document.getElementById('telefones').innerHTML = '<input type="tel" class="form-control" placeholder="(99) 99999-9999" name="telefones" value="' + telefones + '" id="inputTelefones">';
-            document.getElementById('data_admisso_container').innerHTML = '<input type="text" class="form-control" placeholder="DD/MM/AAAA" name="data_admisso" value="' + data_admisso + '" id="inputDataAdmissao">';
-            document.getElementById('turno').innerHTML = '<input type="text" class="form-control" placeholder="Turno" name="turno" value="' + turno + '">';
-            document.getElementById('endereo_bairro').innerHTML = '<input type="text" class="form-control" placeholder="Bairro" name="endereo_bairro" value="' + endereo_bairro + '">';
-            document.getElementById('data_aviso_previo_container').innerHTML = '<input type="text" class="form-control" placeholder="DD/MM/AAAA - DD/MM/AAAA" name="data_incio_e_fim_aviso_prvio" value="' + data_incio_e_fim_aviso_prvio + '" id="inputDataAvisoPrevio">';
-            document.getElementById('email').innerHTML = '<input type="email" class="form-control" placeholder="E-mail" name="email" value="' + email + '">';
-            document.getElementById('cpf').innerHTML = '<input type="text" class="form-control" placeholder="XXX.XXX.XXX-XX" name="cpf" value="' + cpf + '" id="inputCpf">';
-            document.getElementById('telefones1').innerHTML = '<input type="tel" class="form-control" placeholder="(99) 99999-9999" name="telefones1" value="' + telefones1 + '" id="inputTelefones1">';
-            document.getElementById('obs').innerHTML = '<input type="text" class="form-control" placeholder="Observações" name="obs" value="' + obs + '">';
+        // --- Preenchimento dos elementos HTML e criação de inputs ---
+        // Os inputs são gerados dinamicamente aqui.
+        // É importante dar IDs ÚNICOS para os campos de data, como `inputDataAdmissao` e `inputDataAvisoPrevio`.
+        document.getElementById('funcionrio').innerHTML = '<input type="text" class="form-control" placeholder="Nome do funcionário" name="funcionrio" value="' + funcionrio + '">';
+        document.getElementById('vnculo').innerHTML = '<input type="text" class="form-control" placeholder="Vínculo" name="vnculo" value="' + vnculo + '">';
+        document.getElementById('cargo').innerHTML = '<input type="text" class="form-control" placeholder="Cargo" name="cargo" value="' + cargo + '">';
+        document.getElementById('equipamento').innerHTML = '<input type="text" class="form-control" placeholder="Equipamento" name="equipamento" value="' + equipamento + '">';
+        document.getElementById('matrcula').innerHTML = '<input type="text" class="form-control" placeholder="Matrícula" name="matrcula" value="' + matrcula + '">';
+        document.getElementById('telefones').innerHTML = '<input type="tel" class="form-control" placeholder="(99) 99999-9999" name="telefones" value="' + telefones + '" id="inputTelefones">';
+        document.getElementById('data_admisso_container').innerHTML = '<input type="text" class="form-control" placeholder="DD/MM/AAAA" name="data_admisso" value="' + data_admisso + '" id="inputDataAdmissao">';
+        document.getElementById('turno').innerHTML = '<input type="text" class="form-control" placeholder="Turno" name="turno" value="' + turno + '">';
+        document.getElementById('endereo_bairro').innerHTML = '<input type="text" class="form-control" placeholder="Bairro" name="endereo_bairro" value="' + endereo_bairro + '">';
+        document.getElementById('data_aviso_previo_container').innerHTML = '<input type="text" class="form-control" placeholder="DD/MM/AAAA - DD/MM/AAAA" name="data_incio_e_fim_aviso_prvio" value="' + data_incio_e_fim_aviso_prvio + '" id="inputDataAvisoPrevio">';
+        document.getElementById('email').innerHTML = '<input type="email" class="form-control" placeholder="E-mail" name="email" value="' + email + '">';
+        document.getElementById('cpf').innerHTML = '<input type="text" class="form-control" placeholder="XXX.XXX.XXX-XX" name="cpf" value="' + cpf + '" id="inputCpf">';
+        document.getElementById('telefones1').innerHTML = '<input type="tel" class="form-control" placeholder="(99) 99999-9999" name="telefones1" value="' + telefones1 + '" id="inputTelefones1">';
+        document.getElementById('obs').innerHTML = '<input type="text" class="form-control" placeholder="Observações" name="obs" value="' + obs + '">';
 
 
-            // --- Aplicar máscaras e datepickers APÓS os inputs serem inseridos no DOM ---
-            // Máscaras de telefone e CPF
-            $('#inputTelefones').mask('(00) 00000-0000');
-            $('#inputTelefones1').mask('(00) 00000-0000');
-            $('#inputCpf').mask('000.000.000-00', {
-              reverse: true
-            });
+        // --- Aplicar máscaras e datepickers APÓS os inputs serem inseridos no DOM ---
+        // Máscaras de telefone e CPF
+        $('#inputTelefones').mask('(00) 00000-0000');
+        $('#inputTelefones1').mask('(00) 00000-0000');
+        $('#inputCpf').mask('000.000.000-00', {
+          reverse: true
+        });
 
-            // Inicializar Datepicker para "Data Admissão" (uma única data)
-            $('#inputDataAdmissao').datepicker({
-              format: 'dd/mm/yyyy',
-              language: 'pt-BR',
-              autoclose: true,
-              todayHighlight: true
-            });
+        // Inicializar Datepicker para "Data Admissão" (uma única data)
+        $('#inputDataAdmissao').datepicker({
+          format: 'dd/mm/yyyy',
+          language: 'pt-BR',
+          autoclose: true,
+          todayHighlight: true
+        });
 
-            // Máscara para "Data Início e Fim Aviso Prévio" (intervalo de datas como texto)
-            // Mantemos a máscara de texto aqui, pois o datepicker padrão não é para intervalos.
-            $('#inputDataAvisoPrevio').mask('00/00/0000 - 00/00/0000');
+        // Inicializar Datepicker para "Data Início e Fim Aviso Prévio" (uma única data)
+        // Se você precisa de um range picker, esta abordagem não será ideal.
+        // Ela fará com que o campo se comporte como um seletor de data única.
+        $('#inputDataAvisoPrevio').datepicker({
+          format: 'dd/mm/yyyy',
+          language: 'pt-BR',
+          autoclose: true,
+          todayHighlight: true
+        });
+        // Máscara para "Data Início e Fim Aviso Prévio" (intervalo de datas como texto)
+        // Mantemos a máscara de texto aqui, pois o datepicker padrão não é para intervalos.
+        // A máscara de texto agora será aplicada APÓS o datepicker, mas o datepicker só seleciona uma data.
+        // Para uma seleção de range, considere uma biblioteca dedicada.
+        $('#inputDataAvisoPrevio').mask('00/00/0000 - 00/00/0000');
 
-          } else {
-            console.warn("Nenhum dado encontrado para edição.");
-            // Limpa os campos ou mostra uma mensagem de erro
-            document.getElementById('form_cliente').innerHTML = '<div class="alert alert-warning">Nenhum dado encontrado para este funcionário.</div>';
-          }
-        },
-        error: function(xhr, status, error) {
-          alert('Erro ao carregar os dados de edição.');
-          console.error(xhr.responseText);
-        }
-      });
+
+      } else {
+        console.warn("Nenhum dado encontrado para edição.");
+        // Limpa os campos ou mostra uma mensagem de erro
+        document.getElementById('form_cliente').innerHTML = '<div class="alert alert-warning">Nenhum dado encontrado para este funcionário.</div>';
+      }
+    },
+    error: function(xhr, status, error) {
+      alert('Erro ao carregar os dados de edição.');
+      console.error(xhr.responseText);
     }
+  });
+}
 
 
     function mostrarNomeRepresentante() {

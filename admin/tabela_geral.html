@@ -6,6 +6,8 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://static.hsappstatic.net https://maps.googleapis.com; object-src 'none'; base-uri 'self';">
+
   <title>
     NINA - Núcleo Integrado de Niterói para Administração
   </title>
@@ -15,6 +17,9 @@
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
   <style>
     .table-responsive {
       overflow: hidden;
@@ -55,7 +60,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav" id="listarMenu">
-          </ul>
+        </ul>
       </div>
     </div>
     <div class="main-panel">
@@ -233,10 +238,11 @@
 
         <div class="col-md-12" id="listagem_cliente" style="display:block;">
           <div class="card card-plain">
-           <div class="card-header">
+            <div class="card-header">
               <h4 class="card-title"> Tabela Geral</h4>
               <p class="card-category"> Atualize seus contatos para melhores resultados</p>
-              <div class="d-flex justify-content-between align-items-center"> <div id="paginacao" class="text-center mt-3"></div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div id="paginacao" class="text-center mt-3"></div>
                 <div>
                   <button class="btn btn-info btn-round" onclick="exportData('pdf')">Exportar PDF</button>
                   <button class="btn btn-success btn-round" onclick="exportData('excel')">Exportar Excel</button>
@@ -300,11 +306,13 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
   <script src="../assets/demo/demo.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
   <script src="../assets/js/form-ajax.js"></script>
   <script src="../assets/js/listaGeral.js"></script>
@@ -321,23 +329,29 @@
       $('#dataAdmissao').mask('00/00/0000');
       $('#dataAvisoPrevio').mask('00/00/0000 - 00/00/0000');
 
-      // Máscaras para o formulário de edição (se houver, caso ele seja carregado dinamicamente)
-      // Exemplo (se a função mostrarDadosEditUSer for chamada após o carregamento do DOM)
-      // Se você tiver um formulário de edição que carrega inputs dinamicamente,
-      // as máscaras devem ser aplicadas DENTRO da função que carrega esses inputs,
-      // depois que eles forem inseridos no DOM.
-      // Ex:
-      // function mostrarDadosEditUSer() {
-      //   // ... seu código que cria os inputs dinamicamente ...
-      //   $('#inputTelefones').mask('(00) 00000-0000');
-      //   $('#inputTelefones1').mask('(00) 00000-0000');
-      //   $('#inputCpf').mask('000.000.000-00', {reverse: true});
-      //   $('#inputDataAdmissao').mask('00/00/0000');
-      //   $('#inputDataAvisoPrevio').mask('00/00/0000 - 00/00/0000');
-      // }
-      // Para este HTML, as máscaras acima são suficientes, pois os campos já estão no HTML.
-    });
+      // INICIALIZAÇÃO DOS DATEPICKERS
+      $('#dataAdmissao').datepicker({
+        format: 'dd/mm/yyyy',
+        language: 'pt-BR',
+        autoclose: true,
+        todayHighlight: true
+      });
 
+      $('#dataAvisoPrevio').datepicker({
+        format: 'dd/mm/yyyy',
+        language: 'pt-BR',
+        autoclose: true,
+        todayHighlight: true
+      });
+
+
+      // As funções validarLogin, mostrarNomeRepresentante, motrarMenu, dadosUser
+      // são chamadas aqui para garantir que o DOM esteja pronto quando elas tentarem acessar os elementos.
+      validarLogin();
+      mostrarNomeRepresentante();
+      motrarMenu();
+      dadosUser();
+    });
 
     // Funções JavaScript gerais (podem estar fora de $(document).ready() se não dependerem do DOM pronto para serem definidas)
     function validarLogin() {
@@ -357,7 +371,6 @@
         }
       });
     }
-    validarLogin(); // Chama a função na inicialização
 
     function sair() {
       $.ajax({
@@ -378,6 +391,7 @@
       });
     }
 
+    // Função para mostrar o formulário de cadastro e esconder a listagem
     function verformCliente() {
       document.getElementById("form_cliente").style.display = "block";
       document.getElementById("listagem_cliente").style.display = "none";
@@ -385,6 +399,7 @@
       document.getElementById("BtnListagem").style.display = "block";
     }
 
+    // Função para mostrar a listagem e esconder o formulário de cadastro
     function verListagemClientes() {
       document.getElementById("listagem_cliente").style.display = "block";
       document.getElementById("form_cliente").style.display = "none";
@@ -433,7 +448,7 @@
         document.getElementById("mostraUser").innerHTML += '<input type="text" class="form-control" disabled="" value="ID de Usuário Ausente"><input type="hidden" value="" name="idRepresentante" />';
       }
     }
-    mostrarNomeRepresentante(); // Chama a função na inicialização
+
 
     // Lista o menu de acordo com o LOGIN DO USUARIO
     function motrarMenu() {
@@ -477,7 +492,7 @@
         });
       }
     }
-    motrarMenu(); // Chama a função na inicialização
+
 
     // Lista nome de usuário LOGADO no menu
     function dadosUser() {
@@ -504,7 +519,7 @@
           success: function(retorno) {
             document.getElementById("listaNomeUser").innerHTML = ''; // Limpa conteúdo anterior
             if (retorno && retorno.length > 0) {
-              var primeiro_nome = retorno[0].nome;
+              var primeiro_nome = retorno[0].nome
               document.getElementById("listaNomeUser").innerHTML += primeiro_nome;
             } else {
               document.getElementById("listaNomeUser").innerHTML += "Usuário Desconhecido";
@@ -517,25 +532,10 @@
         });
       }
     }
-    dadosUser(); // Chama a função na inicialização
-
-    // Este listener de input é redundante se você estiver usando jQuery Mask.
-    // O jQuery Mask já cuida da formatação. Mantenha apenas se tiver um motivo específico.
-    // const telefoneInput = document.getElementById("telefone");
-    // if (telefoneInput) { // Check if element exists before adding listener
-    //   telefoneInput.addEventListener("input", function(e) {
-    //     let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não é número
-    //     if (value.length > 10) {
-    //       value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
-    //     } else {
-    //       value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
-    //     }
-    //     e.target.value = value;
-    //   });
-    // }
 
     // Lógica de controle de inatividade
     const MAX_IDLE_TIME = 15 * 60 * 1000; // 15 minutos em milissegundos
+
     function checkIdleTime() {
       const lastActivity = sessionStorage.getItem('lastActivity');
       const now = Date.now();
@@ -560,39 +560,31 @@
     );
   </script>
   <script>
-  // ... (your existing JavaScript code) ...
+    function exportData(format) {
+      let url = '';
+      const searchTerm = document.getElementById('search').value;
 
-  function exportData(format) {
-    let url = '';
-    // You might want to pass the current search term to the export scripts
-    // if your PHP export scripts are designed to filter based on it.
-    const searchTerm = document.getElementById('search').value;
+      switch (format) {
+        case 'pdf':
+          url = 'http://localhost/nina/php/exportar_PDF.php';
+          break;
+        case 'excel':
+          url = 'http://localhost/nina/php/exportar_ECXEL.php';
+          break;
+        case 'word':
+          url = 'http://localhost/nina/php/exportar_DOCX.php';
+          break;
+        default:
+          return; // Não faz nada se o formato não for reconhecido
+      }
 
-    switch (format) {
-      case 'pdf':
-        url = 'http://localhost/nina/php/exportar_PDF.php';
-        break;
-      case 'excel':
-        url = 'http://localhost/nina/php/exportar_ECXEL.php';
-        break;
-      case 'word':
-        url = 'http://localhost/nina/php/exportar_DOCX.php';
-        break;
-      default:
-        return; // Do nothing if format is not recognized
+      if (searchTerm) {
+        url += '?termo_busca=' + encodeURIComponent(searchTerm);
+      }
+
+      window.open(url, '_blank');
     }
-
-    // If you want to pass the search term to the export script:
-    // This assumes your PHP export scripts can handle a 'termo_busca' GET parameter.
-    if (searchTerm) {
-      url += '?termo_busca=' + encodeURIComponent(searchTerm);
-    }
-
-    window.open(url, '_blank');
-  }
-
-  // ... (rest of your existing JavaScript code) ...
-</script>
+  </script>
 </body>
 
 </html>
