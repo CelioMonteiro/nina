@@ -14,16 +14,20 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT id, nome, email, data_cadastro FROM sua_tabela WHERE 1=1";
+    // Update table name to your actual table name if it's not 'sua_tabela'
+    // Ensure all field names are exactly as they appear in your MySQL table
+    $sql = "SELECT funcionrio, vnculo, cargo, equipamento, matrcula, telefones, data_admisso, turno, endereo_bairro, data_incio_e_fim_aviso_prvio, email, cpf, telefones1, obs FROM sua_tabela WHERE 1=1";
     $params = [];
 
     if (!empty($termoBusca)) {
-        $sql .= " AND (nome LIKE :termo OR email LIKE :termo)"; // Exemplo de busca em 'nome' e 'email'
+        // Example search across multiple relevant fields
+        // Keep the field names exactly as in your MySQL table
+        $sql .= " AND (funcionrio LIKE :termo OR email LIKE :termo OR cpf LIKE :termo OR matrcula LIKE :termo)"; 
         $params[':termo'] = '%' . $termoBusca . '%';
     }
 
     // Adicione ORDER BY se quiser uma ordem específica
-    // $sql .= " ORDER BY nome ASC";
+    $sql .= " ORDER BY funcionrio ASC"; // Ordering by 'funcionrio' for example
 
     $stmt = $conn->prepare($sql);
     $stmt->execute($params);
@@ -37,21 +41,39 @@ try {
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
-// Adicionar cabeçalhos
-$sheet->setCellValue('A1', 'ID');
-$sheet->setCellValue('B1', 'Nome');
-$sheet->setCellValue('C1', 'Email');
-$sheet->setCellValue('D1', 'Data de Cadastro');
-// ... adicione mais colunas conforme necessário
+// Adicionar cabeçalhos - using the exact field names as titles
+$sheet->setCellValue('A1', 'funcionrio');
+$sheet->setCellValue('B1', 'vnculo');
+$sheet.setCellValue('C1', 'cargo');
+$sheet.setCellValue('D1', 'equipamento');
+$sheet.setCellValue('E1', 'matrcula');
+$sheet.setCellValue('F1', 'telefones');
+$sheet.setCellValue('G1', 'data_admisso');
+$sheet.setCellValue('H1', 'turno');
+$sheet.setCellValue('I1', 'endereo_bairro');
+$sheet.setCellValue('J1', 'data_incio_e_fim_aviso_prvio');
+$sheet.setCellValue('K1', 'email');
+$sheet.setCellValue('L1', 'cpf');
+$sheet.setCellValue('M1', 'telefones1');
+$sheet.setCellValue('N1', 'obs');
 
-// Adicionar os dados
+// Adicionar os dados - directly using the field names as keys
 $row = 2; // Começa na segunda linha, pois a primeira é o cabeçalho
 foreach ($results as $data) {
-    $sheet->setCellValue('A' . $row, $data['id']);
-    $sheet->setCellValue('B' . $row, $data['nome']);
-    $sheet->setCellValue('C' . $row, $data['email']);
-    $sheet->setCellValue('D' . $row, $data['data_cadastro']);
-    // ... adicione mais colunas
+    $sheet.setCellValue('A' . $row, $data['funcionrio']);
+    $sheet.setCellValue('B' . $row, $data['vnculo']);
+    $sheet.setCellValue('C' . $row, $data['cargo']);
+    $sheet.setCellValue('D' . $row, $data['equipamento']);
+    $sheet.setCellValue('E' . $row, $data['matrcula']);
+    $sheet.setCellValue('F' . $row, $data['telefones']);
+    $sheet.setCellValue('G' . $row, $data['data_admisso']);
+    $sheet.setCellValue('H' . $row, $data['turno']);
+    $sheet.setCellValue('I' . $row, $data['endereo_bairro']);
+    $sheet.setCellValue('J' . $row, $data['data_incio_e_fim_aviso_prvio']);
+    $sheet.setCellValue('K' . $row, $data['email']);
+    $sheet.setCellValue('L' . $row, $data['cpf']);
+    $sheet.setCellValue('M' . $row, $data['telefones1']);
+    $sheet.setCellValue('N' . $row, $data['obs']);
     $row++;
 }
 
@@ -61,7 +83,7 @@ foreach (range('A', $sheet->getHighestColumn()) as $col) {
 }
 
 // 4. Definir cabeçalhos HTTP para download
-$fileName = 'dados_exportados_' . date('Ymd_His') . '.xlsx';
+$fileName = 'dados_funcionarios_exportados_' . date('Ymd_His') . '.xlsx';
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="' . $fileName . '"');
 header('Cache-Control: max-age=0');
