@@ -343,46 +343,75 @@ jQuery(document).ready(function(){
   });
 });
 //LOGAR USER UPDATE
-jQuery(document).ready(function(){
-  jQuery('#logarUser').submit(function(){
-    var dados = jQuery(this).serialize();
-    jQuery.ajax({
-      type: "POST",
-      url: "http://localhost/nina/php/logar.php",
-      data: dados,
-      dataType: "json", // importante!
-      success: function(data)
-      {
-        console.log(data);
-        var idUser    = data.idUser;
-        var userName  = data.nome;
-        var userEmail = data.email;
-        var status    = data.status;
+// Seleciona o formulário de login pelo ID
+const loginForm = document.getElementById('loginForm'); // Certifique-se de que seu formulário HTML tem id="loginForm"
+const errorMessageDiv = document.getElementById('errorMessage'); // Opcional: Para exibir mensagens de erro ao usuário
 
-        if(idUser != 0){
-          if(status == 1){
-            alert('Seja Bem Vindo, ' + userName);
-            sessionStorage.setItem('lastActivity', Date.now());
-            window.location.replace("http://localhost/nina/admin/tabela_geral.html?idUser=" + idUser);
-          }else{
-            alert('Usuário(A) '+userName+' inativo no sistema');
-            window.location.replace("http://localhost/nina/admin/login.html?idUser=" + idUser);
-          }
-         
-        } else {
-          alert('Usuário ou Senha inválido');
-          location.reload();
+if (loginForm) {
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Impede o comportamento padrão de submit do formulário (recarregar a página)
+
+        // Limpa mensagens de erro anteriores
+        if (errorMessageDiv) {
+            errorMessageDiv.textContent = '';
+            errorMessageDiv.style.display = 'none';
         }
-      },
-      error: function(xhr, status, error) {
-        alert('Erro ao conectar com o servidor');
-        console.error(xhr.responseText);
-      }
+
+        // Coleta os dados do formulário
+        const email = loginForm.email.value;   // Assume que o input de email tem name="email"
+        const senha = loginForm.senha.value;   // Assume que o input de senha tem name="senha"
+
+        // Validação básica no cliente
+        if (!email || !senha) {
+            if (errorMessageDiv) {
+                errorMessageDiv.textContent = 'Por favor, preencha todos os campos.';
+                errorMessageDiv.style.display = 'block';
+            }
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost/nina/php/logar.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({
+                    erro: 'Erro de rede ou resposta inválida.'
+                }));
+                throw new Error(errorData.erro || `Erro HTTP: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log("Resposta do servidor:", data);
+
+            if (data.idUser && data.idUser > 0) {
+                alert(`Bem-vindo(a), ${data.nome}! Login realizado com sucesso.`);
+                window.location.href = '../admin/tabela_geral.html'; // Redireciona para a tabela geral
+            } else {
+                if (errorMessageDiv) {
+                    errorMessageDiv.textContent = 'Email ou senha incorretos.';
+                    errorMessageDiv.style.display = 'block';
+                }
+                console.log("Falha no login: ID de usuário inválido.");
+            }
+
+        } catch (error) {
+            console.error("Erro na requisição de login:", error);
+            if (errorMessageDiv) {
+                errorMessageDiv.textContent = `Ocorreu um erro: ${error.message}`;
+                errorMessageDiv.style.display = 'block';
+            }
+        }
     });
-    
-    return false;
-  });
-});
+} else {
+    console.error("Elemento com ID 'loginForm' não encontrado no DOM.");
+}
+
 
 //FORM LOGAR erro- USER
 jQuery(document).ready(function(){
