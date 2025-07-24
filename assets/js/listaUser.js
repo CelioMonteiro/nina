@@ -12,7 +12,7 @@ var idUser = datas.idUser
 
 $.ajax({
     type: "GET",
-    url: "http://localhost/lerin/php/listaUserTabela.php", 
+    url: "http://localhost/nina/php/listaUserTabela.php", 
     contentType: false,
     cache: false,
     dataType: "json",

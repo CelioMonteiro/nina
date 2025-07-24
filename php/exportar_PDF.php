@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 // ** Caminho absoluto para o autoload.php conforme especificado **
 // Certifique-se de que este caminho está correto para o seu ambiente.
-require '/home/lerin/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
